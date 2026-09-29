@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt-BR" manifest="cache.manifest">
+<html lang="en" manifest="cache.manifest">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduGps4 // PS4 Host & Cache</title>
-    <link rel="icon" type="image/png" href="Gps4.png">
+    <title>PSPULSE // PS4 13.02-13.52 HOST / CACHE</title>
+    <link rel="icon" type="image/png" href="../../pspulse.png">
     <style>
         :root {
             --bg: #151515;
@@ -38,6 +38,7 @@
 
         .app { display: flex; flex: 1 0 auto; flex-direction: column; margin: 0 auto; padding: 14px 26px 12px; width: min(100% - 52px, 920px); }
 
+        /* Top status bar */
         .bar {
             align-items: center;
             border: 1px solid var(--line-bright);
@@ -57,7 +58,7 @@
         .kicker { color: var(--accent); font-size: 14px; letter-spacing: .14em; margin: 0 0 12px; }
         h1 { font-size: clamp(32px, 5vw, 52px); font-weight: 400; letter-spacing: -.07em; line-height: 1; margin: 0; }
         h1 em { color: var(--accent); font-style: normal; }
-
+        .sub { color: var(--muted); font-size: 17px; margin: 13px 0 0; }
         .boot { color: var(--dim); font-size: 14px; list-style: none; margin: 12px 0 0; }
         .boot li { margin: 3px 0; }
         .boot b { color: var(--accent); font-weight: 400; }
@@ -68,6 +69,7 @@
         .progress-bar { background: var(--panel-2); border: 1px solid var(--line); height: 62px; overflow: hidden; position: relative; }
         .progress-fill { background: var(--accent); height: 100%; width: 0; }
         .progress-text { color: var(--text); font-size: 20px; font-weight: 400; left: 50%; position: absolute; text-shadow: 0 1px 8px rgba(0, 0, 0, .8); top: 50%; transform: translate(-50%, -50%); z-index: 3; }
+        .status-message { color: var(--muted); font-size: 15px; margin-top: 12px; }
 
         .foot {
             border-top: 1px solid var(--line);
@@ -77,6 +79,8 @@
             padding: 12px 4px 2px;
             text-align: center;
         }
+        .foot a { color: var(--muted); }
+        .foot a:hover, .foot a:focus { color: var(--accent); }
 
         @media (max-width: 700px) {
             body { overflow: auto; }
@@ -92,39 +96,40 @@
 <body>
     <div class="app">
         <header class="bar">
-            <span><b>EDUGPS4</b> // PS4 HOST</span>
-            <span class="bar-fw">INSTALAÇÃO CACHE</span>
+            <span><b>PSPULSE</b> // ps4 hosts</span>
+            <span class="bar-fw">cache update</span>
         </header>
 
         <main class="layout">
-            <p class="kicker">$ ./edugps4 --cache</p>
-            <h1>Carregando <em>Cache Offline</em></h1>
+            <p class="kicker">$ ./cache --install</p>
+            <h1>Loading <em>offline cache</em></h1>
             <ul class="boot">
-                <li>[ <b>ok</b> ] Arquivos do exploit prontos</li>
-                <li>[ <b>..</b> ] Baixando arquivos para a memória local</li>
+                <li>[ <b>ok</b> ] slopkit chain ready</li>
+                <li>[ <b>..</b> ] downloading host files</li>
             </ul>
 
             <section class="progress-container">
-                <div class="progress-label" id="progress">Aguarde...</div>
+                <div class="progress-label" id="progress">Loading.. Please Wait !!!</div>
                 <div class="progress-wrapper">
                     <div class="progress-bar" id="myProgress">
                         <div class="progress-fill" id="myBar"></div>
                         <div class="progress-text" id="progressText">0%</div>
                     </div>
                 </div>
+                <div class="status-message">Initializing cache system...</div>
             </section>
         </main>
 
         <footer class="foot">
-            EduGps4 &copy; Host Personalizado PS4
+            Author: <a href="https://t.me/sudoBlackArch">BlackArch</a> // Telegram: <a href="https://t.me/PlayStation_Pulse">PlayStation Pulse</a>
         </footer>
     </div>
 
     <script>
-        if (window.applicationCache.status == 2) { localStorage.isCached = true; }
+if (window.applicationCache.status == 2) { localStorage.is1352Cached = true; }
         window.applicationCache.ondownloading = function () {
-            document.getElementById("progress").innerHTML = "Instalação do Cache Iniciada!";
-            localStorage.isCached = false;
+            document.getElementById("progress").innerHTML = "Page Caching Started!!";
+            localStorage.is1352Cached = false;
         };
         window.applicationCache.onprogress = function (a) {
             var progress = Math.round(100 * (a.loaded / a.total));
@@ -132,13 +137,13 @@
             document.getElementById("progressText").innerHTML = progress + "%";
         };
         window.applicationCache.oncached = function () {
-            document.getElementById("progress").innerHTML = "Cache Instalado com Sucesso!";
-            localStorage.isCached = true;
+            document.getElementById("progress").innerHTML = "Page Cached Successfully!!!";
+            localStorage.is1352Cached = true;
             setTimeout(function () { window.location.replace("index.html"); }, 1500);
         };
         window.applicationCache.onupdateready = function () {
-            document.getElementById("progress").innerHTML = "Cache Atualizado com Sucesso!";
-            localStorage.isCached = true;
+            document.getElementById("progress").innerHTML = "Update Cache Successfully!!!";
+            localStorage.is1352Cached = true;
             setTimeout(function () { window.location.replace("index.html"); }, 1500);
         };
         window.applicationCache.onnoupdate = function () { window.location.replace("index.html"); };
