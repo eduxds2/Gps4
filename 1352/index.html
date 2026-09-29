@@ -2,230 +2,136 @@
 <html lang="pt-BR" manifest="cache.manifest">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>EduGps4 // HOST PS4 13.02-13.52 / GOLDHEN · Eduxds2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduGps4 // PS4 13.02-13.52 HOST / GOLDHEN</title>
 <link rel="icon" type="image/png" href="Gps4.png">
 <style>
     :root {
-        --bg-dark: #090d16;
-        --card-bg: #131c2e;
-        --card-hover: #1c2a45;
-        --accent: #00d2ff;
-        --accent-purple: #9d4edd;
-        --accent-pink: #ff007f;
-        --text-main: #ffffff;
-        --text-muted: #a0aec0;
-        --success: #00e676;
-        --danger: #ff5c7a;
-        --amber: #fbbf24;
-        --border: #2d3748;
+        --bg: #151515;
+        --panel: #1c1c1c;
+        --panel-2: #242424;
+        --line: #2e2e2e;
+        --line-bright: #454545;
+        --text: #f5f5f5;
+        --muted: #b5b5b5;
+        --dim: #828282;
+        --accent: #a294ff;
+        --red: #ff9b9b;
+        --amber: #e1bd72;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif; }
-    html { background: var(--bg-dark); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { background: var(--bg); }
     html, body { min-height: 100%; }
     body {
-        background-color: var(--bg-dark);
-        background-image: 
-            radial-gradient(circle at 15% 20%, rgba(157, 78, 221, 0.12) 0%, transparent 45%),
-            radial-gradient(circle at 85% 80%, rgba(0, 210, 255, 0.1) 0%, transparent 45%);
-        color: var(--text-main);
+        background-color: var(--bg);
+        background-image: linear-gradient(rgba(162, 148, 255, .05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(162, 148, 255, .05) 1px, transparent 1px);
+        background-size: 36px 36px;
+        color: var(--text);
         display: flex;
         flex-direction: column;
+        font: 17px/1.4 Consolas, "Liberation Mono", monospace;
         min-height: 100vh;
         overflow-x: hidden;
     }
-    a { color: inherit; text-decoration: none; }
+    a { color: inherit; }
 
-    /* HEADER GLOBAL SUPERIOR ESTILO EDUXDS2 */
-    header {
-        background: #0b111e;
-        border-bottom: 1px solid var(--border);
-        padding: 16px 30px;
-        display: flex;
+    .app { display: flex; flex: 1 0 auto; flex-direction: column; margin: 0 auto; padding: 14px 26px 12px; width: min(100% - 52px, 1220px); }
+
+    /* Top status bar */
+    .bar {
         align-items: center;
+        border: 1px solid var(--line-bright);
+        display: flex;
+        font-size: 14px;
         justify-content: space-between;
-        gap: 20px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-        position: sticky;
-        top: 0;
-        z-index: 100;
-    }
-    .brand-header { display: flex; align-items: center; gap: 14px; }
-    .gps4-logo {
-        width: 44px;
-        height: 44px;
-        object-fit: contain;
-        filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.7));
-        flex-shrink: 0;
-    }
-    header h1 {
-        font-size: 1.25rem;
-        color: var(--accent);
-        background: linear-gradient(45deg, var(--accent), var(--accent-pink));
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
+        letter-spacing: .1em;
+        padding: 10px 16px;
         text-transform: uppercase;
-        letter-spacing: 1px;
-        font-weight: 800;
     }
-    .brand-sub { font-size: 0.75rem; color: var(--accent); font-weight: 700; letter-spacing: 0.5px; }
-    
-    .pill {
-        background: rgba(0, 210, 255, 0.1);
-        border: 1px solid var(--accent);
-        border-radius: 20px;
-        color: var(--accent);
-        font-size: 0.8rem;
-        font-weight: 700;
-        padding: 6px 14px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-    .pill::before {
-        content: "";
-        width: 8px;
-        height: 8px;
-        background-color: var(--accent);
-        border-radius: 50%;
-        box-shadow: 0 0 8px var(--accent);
-    }
+    .bar b { color: var(--accent); font-weight: 400; }
+    .bar-fw { color: var(--dim); }
+    .bar-fw::before { color: var(--accent); content: "\25CF "; }
 
-    /* CONTEÚDO PRINCIPAL */
-    .app { flex: 1 0 auto; margin: 0 auto; max-width: 1000px; padding: 40px 24px; width: 100%; }
-    .header-box h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 800; line-height: 1.2; margin-bottom: 6px; }
-    .header-box h2 span { color: var(--accent); }
-    .header-box p { color: var(--text-muted); font-size: 1rem; margin-top: 8px; }
+    .layout { display: flex; flex: 1 0 auto; flex-direction: column; padding: 20px 0 0; }
 
-    .chips { margin: 20px 0 10px; }
-    .chip {
-        background: var(--card-bg);
-        border: 1px solid var(--border);
-        border-radius: 20px;
-        color: var(--text-muted);
-        display: inline-block;
-        font-size: 0.8rem;
-        font-weight: 700;
-        margin: 0 8px 8px 0;
-        padding: 6px 14px;
-    }
-    .chip b { color: var(--success); font-weight: 700; }
+    /* Header */
+    .kicker { color: var(--accent); font-size: 14px; letter-spacing: .14em; margin: 0 0 12px; }
+    h1 { font-size: clamp(34px, 5vw, 56px); font-weight: 400; letter-spacing: -.07em; line-height: 1; margin: 0; }
+    h1 em { color: var(--accent); font-style: normal; }
+    .sub { color: var(--muted); font-size: 17px; margin: 13px 0 0; max-width: 720px; }
+    .boot { color: var(--dim); font-size: 14px; list-style: none; margin: 12px 0 0; }
+    .boot li { margin: 3px 0; }
+    .boot b { color: var(--accent); font-weight: 400; }
 
-    /* CARTÃO DE STATUS */
+    /* Status Container */
     .status {
-        background: linear-gradient(145deg, var(--card-bg), #0f172a);
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        background: var(--panel);
+        border: 1px solid var(--line);
         margin-top: 20px;
-        overflow: hidden;
-        padding: 26px 28px;
-        position: relative;
+        padding: 14px 16px;
     }
-    .status::before {
-        background: linear-gradient(180deg, var(--accent), var(--accent-purple));
-        content: '';
-        height: 100%;
-        left: 0;
-        position: absolute;
-        top: 0;
-        width: 4px;
-    }
-    #state { color: var(--accent); font-size: 1.6rem; font-weight: 800; line-height: 1.25; margin: 0 0 12px; }
-    #det { color: var(--text-muted); font-size: 0.95rem; margin: 0 0 6px; }
-    #det b { color: var(--text-main); font-weight: 700; }
-    #cache { color: var(--text-muted); font-size: 0.85rem; margin: 0; min-height: 18px; }
-    #cache.cacheok { color: var(--success); }
-    .ok { color: var(--success); }
-    .bad { color: var(--danger); }
+    #state { color: var(--accent); font-size: 22px; font-weight: 400; line-height: 1.25; margin: 0 0 10px; }
+    #det { color: var(--muted); font-size: 14px; margin: 0 0 6px; }
+    #det b { color: var(--text); font-weight: 400; }
+    #cache { color: var(--dim); font-size: 13px; margin: 0 0 10px; min-height: 16px; }
+    #cache.cacheok { color: var(--accent); }
+    .ok { color: var(--accent); }
+    .bad { color: var(--red); }
     .warn { color: var(--amber); }
 
-    /* NODEPLAY */
-    .nodeplay {
-        align-items: center;
-        background: var(--card-bg);
-        border: 1px dashed var(--accent-purple);
-        border-radius: 16px;
-        display: flex;
-        justify-content: space-between;
-        margin-top: 24px;
-        padding: 20px 24px;
-        transition: all 0.3s ease;
-    }
-    .nodeplay:hover, .nodeplay:focus { background: var(--card-hover); border-color: var(--accent); outline: 0; }
-    .nodeplay:focus { box-shadow: 0 0 0 2px var(--bg-dark), 0 0 0 4px var(--accent); }
-    .np-label { color: var(--text-muted); display: block; font-size: 0.8rem; font-weight: 700; }
-    .np-name { color: var(--accent); display: block; font-size: 1.5rem; font-weight: 800; margin-top: 2px; }
-    .np-name b { color: var(--accent-pink); font-weight: 800; }
-    .np-open { color: var(--accent); font-size: 0.9rem; font-weight: 700; }
-
-    /* RODAPÉ */
+    /* Footer */
     .foot {
-        border-top: 1px solid var(--border);
-        color: var(--text-muted);
-        font-size: 0.85rem;
-        margin-top: 28px;
-        padding: 16px 4px 4px;
+        border-top: 1px solid var(--line);
+        color: var(--dim);
+        font-size: 13px;
+        margin-top: 24px;
+        padding: 12px 4px 2px;
         text-align: center;
     }
-    .foot a { color: var(--accent); font-weight: 700; }
-    .foot a:hover, .foot a:focus { color: var(--accent-pink); }
+    .foot a { color: var(--muted); }
+    .foot a:hover, .foot a:focus { color: var(--accent); }
 
     @media (max-width: 760px) {
         body { overflow: auto; }
-        header { padding: 12px 16px; }
-        .app { padding: 20px 14px; }
-        .header-box h2 { font-size: 1.4rem; }
-        .status { padding: 20px 18px; }
-        #state { font-size: 1.25rem; }
+        .app { padding: 8px 10px; width: min(100% - 20px, 560px); }
+        .bar { font-size: 12px; padding: 8px 12px; }
+        .layout { padding-top: 14px; }
+        h1 { font-size: 38px; }
+        .sub { font-size: 16px; }
+        #state { font-size: 19px; }
     }
 </style>
 </head>
 <body>
+    <div class="app">
+        <header class="bar">
+            <span><b>EduGps4</b> // ps4 host</span>
+            <span class="bar-fw">fw 13.02-13.52 pronto</span>
+        </header>
 
-    <!-- HEADER GLOBAL EDUXDS2 -->
-    <header>
-        <div class="brand-header">
-            <img src="Gps4.png" alt="Logo EduGps4" class="gps4-logo">
-            <div>
-                <h1>⚡ EduGps4</h1>
-                <div class="brand-sub">Eduxds2 · Host PS4 · GoldHEN</div>
-            </div>
-        </div>
-        <span class="pill">FW 13.02-13.52 Pronto</span>
-    </header>
+        <main class="layout">
+            <p class="kicker">$ ./launch --slopkit relapse</p>
+            <h1>EduGps4 <em>13.02-13.52</em> host</h1>
+            <p class="sub">Host offline personalizado para exploração e carregamento do GoldHEN.</p>
+            <ul class="boot">
+                <li>[ <b>ok</b> ] cadeia slopkit pronta</li>
+                <li>[ <b>ok</b> ] goldhen v2.4b18.12 carregado</li>
+                <li>[ <b>ok</b> ] cache offline pronto</li>
+            </ul>
 
-    <main class="app">
-        <div class="header-box">
-            <h2>Host SlopKit <span>13.02-13.52</span></h2>
-            <p>Carregador automático offline do GoldHEN por EduGps4.</p>
-        </div>
+            <section class="status" id="wrap">
+                <div id="state">detectando firmware...</div>
+                <div id="det"></div>
+                <div id="cache"></div>
+            </section>
 
-        <div class="chips">
-            <span class="chip"><b>ok</b> cadeia slopkit pronta</span>
-            <span class="chip"><b>ok</b> goldhen v2.4b18.12 preparado</span>
-            <span class="chip"><b>ok</b> cache offline pronto</span>
-        </div>
-
-        <section class="status" id="wrap">
-            <div id="state">Detectando firmware...</div>
-            <div id="det"></div>
-            <div id="cache"></div>
-        </section>
-
-        <a class="nodeplay" href="https://nodeplay.net/" target="_blank" rel="noopener">
-            <span><span class="np-label">Servidores de jogos premium</span><span class="np-name">Node<b>Play</b></span></span>
-            <span class="np-open">ABRIR &#8599;</span>
-        </a>
-
-        <footer class="foot">
-            Autor: <a href="https://t.me/sudoBlackArch">BlackArch</a> // Telegram: <a href="https://t.me/PlayStation_Pulse">PlayStation Pulse</a>
-        </footer>
-    </main>
+            <footer class="foot">
+                Host por <b>EduGps4</b> // Baseado no projeto PSPULSE
+            </footer>
+        </main>
+    </div>
 
 <script>
 (function () {
@@ -255,16 +161,15 @@
     var forced = queryValue("force") === "1";
     var supported = forced || (fwnum !== null && SUPPORTED[fwnum] === 1);
 
-    detEl.innerHTML = "Firmware <b>" + (key || "desconhecido") + "</b>"
+    detEl.innerHTML = "firmware <b>" + (key || "desconhecido") + "</b>"
         + " &middot; <b>" + (supported ? "suportado" : "não suportado") + "</b>";
 
     var target = "jb.html" + location.search;
-
     if (location.search.indexOf("log=") === -1) {
         target += (location.search ? "&" : "?") + "log=1";
     }
     function go() {
-        setState("Carregando desbloqueio...", "warn");
+        setState("carregando jailbreak...", "warn");
         location.replace(target);
     }
 
@@ -281,41 +186,41 @@
 
     if (!supported) {
         setState("FIRMWARE NÃO SUPORTADO", "bad");
-        waitForTap("NÃO SUPORTADO (" + (key || "desconhecido") + ") -- pressione X ou toque na tela para executar assim mesmo", go);
+        waitForTap("NÃO SUPORTADO (" + (key || "desconhecido") + ") -- pressione X ou toque para executar mesmo assim", go);
         return;
     }
 
     function waitForDownload() {
-        setCache("Verificando cache...");
+        setCache("verificando cache...");
         ac.addEventListener("downloading",
-            function () { setCache("Salvando em cache para uso offline (primeira execução)..."); }, false);
+            function () { setCache("salvando cache offline..."); }, false);
         ac.addEventListener("progress", function (e) {
             if (e && e.total)
-                setCache("Salvando em cache " + Math.round((e.loaded / e.total) * 100) + "%");
+                setCache("salvando " + Math.round((e.loaded / e.total) * 100) + "%");
         }, false);
 
         ac.addEventListener("cached", function () {
-            setCache("Armazenado em cache para uso offline", true);
-            waitForTap("EM CACHE (primeira execução) -- pressione X ou toque na tela para executar", go);
+            setCache("salvo para uso offline", true);
+            waitForTap("CACHE CONCLUÍDO -- pressione X ou toque para iniciar", go);
         }, false);
         ac.addEventListener("updateready", function () {
             try { ac.swapCache(); } catch (e) {}
-            setCache("Atualização baixada", true);
-            waitForTap("ATUALIZAÇÃO PRONTA -- pressione X ou toque na tela para recarregar e executar",
+            setCache("atualização baixada", true);
+            waitForTap("ATUALIZAÇÃO PRONTA -- pressione X ou toque para recarregar",
                        function () { location.reload(); });
         }, false);
 
         ac.addEventListener("noupdate", function () {
-            setCache("Em cache -- pronto para uso offline", true);
+            setCache("cache ativo -- pronto offline", true);
             go();
         }, false);
         ac.addEventListener("error", function () {
-            setCache("Cache indisponível");
-            waitForTap("FALHA NO CACHE -- pressione X ou toque na tela para executar assim mesmo", go);
+            setCache("falha no cache");
+            waitForTap("FALHA NO CACHE -- pressione X ou toque para tentar executar", go);
         }, false);
         ac.addEventListener("obsolete", function () {
-            setCache("Cache obsoleto");
-            waitForTap("CACHE OBSOLETO -- pressione X ou toque na tela para executar", go);
+            setCache("cache obsoleto");
+            waitForTap("CACHE OBSOLETO -- pressione X ou toque para executar", go);
         }, false);
     }
 
@@ -323,28 +228,28 @@
     if (!ac || !document.documentElement.hasAttribute("manifest")) {
         go();
     } else if (!navigator.onLine) {
-        setCache("Offline -- executando a partir do cache", true);
+        setCache("offline -- executando do cache", true);
         go();
     } else if (ac.status === ac.IDLE) {
-        setCache("Em cache -- verificando atualizações...");
+        setCache("cache ativo -- verificando atualizações...");
         setTimeout(function () {
             if (ac.status === ac.CHECKING || ac.status === ac.DOWNLOADING) {
-                setCache("Atualização encontrada -- baixando...");
+                setCache("atualização encontrada -- baixando...");
                 waitForDownload();
             } else if (ac.status === ac.UPDATEREADY) {
                 try { ac.swapCache(); } catch (e) {}
-                setCache("Atualização baixada", true);
-                waitForTap("ATUALIZAÇÃO PRONTA -- pressione X ou toque na tela para recarregar e executar",
+                setCache("atualização baixada", true);
+                waitForTap("ATUALIZAÇÃO PRONTA -- pressione X ou toque para recarregar",
                            function () { location.reload(); });
             } else {
-                setCache("Em cache", true);
+                setCache("cache verificado", true);
                 go();
             }
         }, 3000);
     } else if (ac.status === ac.UPDATEREADY) {
         try { ac.swapCache(); } catch (e) {}
-        setCache("Atualização baixada", true);
-        waitForTap("ATUALIZAÇÃO PRONTA -- pressione X ou toque na tela para recarregar e executar",
+        setCache("atualização baixada", true);
+        waitForTap("ATUALIZAÇÃO PRONTA -- pressione X ou toque para recarregar",
                    function () { location.reload(); });
     } else {
         waitForDownload();
