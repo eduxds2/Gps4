@@ -7,16 +7,16 @@
     <title>EduGps4 // HOSTS PS4 · Eduxds2</title>
     <style>
         :root {
-            --bg-dark: #090d16;
-            --card-bg: #131c2e;
-            --card-hover: #1c2a45;
-            --accent: #00d2ff;
-            --accent-purple: #9d4edd;
-            --accent-pink: #ff007f;
-            --text-main: #ffffff;
-            --text-muted: #a0aec0;
-            --success: #00e676;
-            --border: #2d3748;
+            --bg-dark: #050b05;
+            --card-bg: #0c180c;
+            --card-hover: #142814;
+            --accent: #00ff66;         /* Verde neon principal */
+            --accent-dim: #00b347;     /* Verde secundário */
+            --accent-bright: #00ff88;  /* Verde de destaque */
+            --text-main: #e6ffe6;
+            --text-muted: #80c080;
+            --success: #00ff66;
+            --border: #1a3d1a;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
@@ -25,8 +25,8 @@
         body {
             background-color: var(--bg-dark);
             background-image: 
-                radial-gradient(circle at 15% 20%, rgba(157, 78, 221, 0.12) 0%, transparent 45%),
-                radial-gradient(circle at 85% 80%, rgba(0, 210, 255, 0.1) 0%, transparent 45%);
+                radial-gradient(circle at 15% 20%, rgba(0, 255, 102, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 85% 80%, rgba(0, 179, 71, 0.08) 0%, transparent 45%);
             color: var(--text-main);
             display: flex;
             flex-direction: column;
@@ -36,16 +36,16 @@
 
         .app { display: flex; flex-direction: column; margin: 0 auto; max-width: 1220px; min-height: 100vh; padding: 24px; width: 100%; }
 
-        /* HEADER GLOBAL SUPERIOR ESTILO EDUXDS2 */
+        /* HEADER GLOBAL SUPERIOR */
         header {
-            background: #0b111e;
+            background: #081208;
             border-bottom: 1px solid var(--border);
             padding: 16px 30px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
             border-radius: 12px;
         }
 
@@ -55,21 +55,21 @@
             gap: 14px;
         }
 
-        /* LOGO FIXA Gps4.png COM BORDA NEON */
+        /* LOGO Gps4.png COM BRILHO NEON VERDE */
         .gps4-logo {
             width: 44px;
             height: 44px;
             object-fit: cover;
             border-radius: 50%;
             border: 2px solid var(--accent);
-            box-shadow: 0 0 12px rgba(0, 210, 255, 0.8);
+            box-shadow: 0 0 12px rgba(0, 255, 102, 0.6);
             background-color: #000;
             flex-shrink: 0;
         }
 
         header h1 {
             font-size: 1.25rem;
-            background: linear-gradient(45deg, var(--accent), var(--accent-pink));
+            background: linear-gradient(45deg, var(--accent), #00b347);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -86,7 +86,7 @@
         }
 
         .bar-ready {
-            background: rgba(0, 210, 255, 0.1);
+            background: rgba(0, 255, 102, 0.1);
             border: 1px solid var(--accent);
             color: var(--accent);
             padding: 6px 14px;
@@ -111,14 +111,13 @@
 
         .layout { display: flex; flex: 1 0 auto; flex-direction: column; padding: 22px 0 0; }
 
-        /* Cabeçalho de Conteúdo */
-        .kicker { color: var(--accent-pink); font-size: 14px; font-weight: 700; letter-spacing: .14em; margin: 0 0 12px; }
+        .kicker { color: var(--accent); font-size: 14px; font-weight: 700; letter-spacing: .14em; margin: 0 0 12px; }
         h2 { font-size: clamp(32px, 5vw, 52px); font-weight: 800; letter-spacing: -.03em; line-height: 1; margin: 0; color: #fff; }
-        h2 em { color: var(--accent); font-style: normal; }
+        h2 em { color: var(--accent); font-style: normal; text-shadow: 0 0 10px rgba(0, 255, 102, 0.4); }
         .sub { color: var(--text-muted); font-size: 1.1rem; margin: 14px 0 0; max-width: 720px; }
         .boot { color: var(--text-muted); font-size: 14px; list-style: none; margin: 14px 0 0; padding: 0; }
         .boot li { margin: 4px 0; }
-        .boot b { color: var(--success); font-weight: 700; }
+        .boot b { color: var(--accent); font-weight: 700; }
 
         /* Menu */
         .menu {
@@ -127,7 +126,7 @@
             border-radius: 16px;
             margin-top: 22px;
             padding: 20px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
         }
         .menu-top {
             align-items: baseline;
@@ -143,7 +142,7 @@
 
         .row {
             align-items: center;
-            background: #090d16;
+            background: #050b05;
             border: 1px solid var(--border);
             border-radius: 12px;
             display: flex;
@@ -156,9 +155,10 @@
             background: var(--card-hover);
             border-color: var(--accent);
             transform: translateY(-2px);
+            box-shadow: 0 0 12px rgba(0, 255, 102, 0.2);
             outline: 0;
         }
-        .num { color: var(--accent-purple); font-size: 16px; font-weight: 800; min-width: 42px; }
+        .num { color: var(--accent-dim); font-size: 16px; font-weight: 800; min-width: 42px; }
         .row:hover .num, .row:focus .num { color: var(--accent); }
         .name { color: #fff; display: block; font-size: 18px; font-weight: 700; line-height: 1.2; }
         .meta { color: var(--text-muted); display: block; font-size: 13px; margin-top: 4px; }
@@ -169,7 +169,7 @@
         .nodeplay {
             align-items: center;
             background: var(--card-bg);
-            border: 1px dashed var(--accent-purple);
+            border: 1px dashed var(--accent-dim);
             border-radius: 16px;
             display: flex;
             justify-content: space-between;
@@ -182,7 +182,7 @@
         .nodeplay:hover, .nodeplay:focus { background: var(--card-hover); border-color: var(--accent); outline: 0; }
         .np-label { color: var(--text-muted); display: block; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
         .np-name { color: var(--accent); display: block; font-size: 22px; font-weight: 800; margin-top: 2px; }
-        .np-name b { color: var(--accent-pink); font-weight: 800; }
+        .np-name b { color: var(--accent-bright); font-weight: 800; }
         .np-open { color: var(--accent); font-size: 14px; font-weight: 700; }
 
         /* Rodapé */
@@ -195,7 +195,7 @@
             text-align: center;
         }
         .foot a { color: var(--accent); font-weight: 700; }
-        .foot a:hover, .foot a:focus { color: var(--accent-pink); }
+        .foot a:hover, .foot a:focus { color: var(--accent-bright); }
 
         @media (max-width: 760px) {
             header { padding: 12px 16px; }
@@ -212,7 +212,7 @@
 </head>
 <body>
     <div class="app">
-        <!-- HEADER GLOBAL ESTILO EDUXDS2 -->
+        <!-- HEADER GLOBAL -->
         <header>
             <div class="brand-header">
                 <img src="Gps4.png" alt="Logo EduGps4" class="gps4-logo">
