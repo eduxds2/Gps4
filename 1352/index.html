@@ -1,304 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" manifest="cache.manifest">
+<html lang="pt-BR" manifest="cache.manifest">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EduGps4 // GOLDHEN</title>
-<link rel="icon" type="image/png" href="../../pspulse.png">
-<style>
-    :root {
-        --bg: #151515;
-        --panel: #1c1c1c;
-        --panel-2: #242424;
-        --line: #2e2e2e;
-        --line-bright: #454545;
-        --text: #f5f5f5;
-        --muted: #b5b5b5;
-        --dim: #828282;
-        --accent: #a294ff;
-        --red: #ff9b9b;
-        --amber: #e1bd72;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { background: var(--bg); }
-    html, body { min-height: 100%; }
-    body {
-        background-color: var(--bg);
-        background-image: linear-gradient(rgba(162, 148, 255, .05) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(162, 148, 255, .05) 1px, transparent 1px);
-        background-size: 36px 36px;
-        color: var(--text);
-        display: flex;
-        flex-direction: column;
-        font: 17px/1.4 Consolas, "Liberation Mono", monospace;
-        min-height: 100vh;
-        overflow-x: hidden;
-    }
-    a { color: inherit; }
-
-    .app { display: flex; flex: 1 0 auto; flex-direction: column; margin: 0 auto; padding: 14px 26px 12px; width: min(100% - 52px, 1220px); }
-
-    /* Top status bar */
-    .bar {
-        align-items: center;
-        border: 1px solid var(--line-bright);
-        display: flex;
-        font-size: 14px;
-        justify-content: space-between;
-        letter-spacing: .1em;
-        padding: 10px 16px;
-        text-transform: uppercase;
-    }
-    .bar b { color: var(--accent); font-weight: 400; }
-    .bar-fw { color: var(--dim); }
-    .bar-fw::before { color: var(--accent); content: "\25CF "; }
-
-    .layout { display: flex; flex: 1 0 auto; flex-direction: column; padding: 20px 0 0; }
-
-    /* Header */
-    .kicker { color: var(--accent); font-size: 14px; letter-spacing: .14em; margin: 0 0 12px; }
-    h1 { font-size: clamp(34px, 5vw, 56px); font-weight: 400; letter-spacing: -.07em; line-height: 1; margin: 0; }
-    h1 em { color: var(--accent); font-style: normal; }
-    .sub { color: var(--muted); font-size: 17px; margin: 13px 0 0; max-width: 720px; }
-    .boot { color: var(--dim); font-size: 14px; list-style: none; margin: 12px 0 0; }
-    .boot li { margin: 3px 0; }
-    .boot b { color: var(--accent); font-weight: 400; }
-
-    /* Router status */
-    .status {
-        background: var(--panel);
-        border: 1px solid var(--line);
-        margin-top: 20px;
-        padding: 14px 16px;
-    }
-    #state { color: var(--accent); font-size: 22px; font-weight: 400; line-height: 1.25; margin: 0 0 10px; }
-    #det { color: var(--muted); font-size: 14px; margin: 0 0 6px; }
-    #det b { color: var(--text); font-weight: 400; }
-    #cache { color: var(--dim); font-size: 13px; margin: 0 0 10px; min-height: 16px; }
-    #cache.cacheok { color: var(--accent); }
-    .ok { color: var(--accent); }
-    .bad { color: var(--red); }
-    .warn { color: var(--amber); }
-
-    /* NodePlay */
-    .nodeplay {
-        align-items: center;
-        background: var(--panel);
-        border: 1px solid var(--line-bright);
-        display: flex;
-        justify-content: space-between;
-        margin-top: 14px;
-        min-height: 68px;
-        padding: 10px 18px;
-        text-decoration: none;
-    }
-    .nodeplay:hover, .nodeplay:focus { background: var(--panel-2); border-color: var(--accent); outline: 0; }
-    .nodeplay:focus { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent); }
-    .np-label { color: var(--dim); display: block; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
-    .np-name { color: var(--text); display: block; font-size: 24px; margin-top: 2px; }
-    .np-name b { color: var(--accent); font-weight: 400; }
-    .np-open { color: var(--accent); font-size: 14px; }
-
-    /* Footer */
-    .foot {
-        border-top: 1px solid var(--line);
-        color: var(--dim);
-        font-size: 13px;
-        margin-top: 16px;
-        padding: 12px 4px 2px;
-        text-align: center;
-    }
-    .foot a { color: var(--muted); }
-    .foot a:hover, .foot a:focus { color: var(--accent); }
-
-    @media (max-width: 760px) {
-        body { overflow: auto; }
-        .app { padding: 8px 10px; width: min(100% - 20px, 560px); }
-        .bar { font-size: 12px; padding: 8px 12px; }
-        .layout { padding-top: 14px; }
-        h1 { font-size: 38px; }
-        .sub { font-size: 16px; }
-        #state { font-size: 19px; }
-    }
-</style>
-</head>
-<body>
-    <div class="app">
-        <header class="bar">
-            <span><b>PSPULSE</b> // ps4 hosts</span>
-            <span class="bar-fw">fw 13.02-13.52 ready</span>
-        </header>
-
-        <main class="layout">
-            <p class="kicker">$ ./launch --slopkit relapse</p>
-            <h1>SlopKit <em>13.02-13.52</em> host</h1>
-            <p class="sub">WebKit research host by PlayStation Pulse.</p>
-            <ul class="boot">
-                <li>[ <b>ok</b> ] slopkit chain ready</li>
-                <li>[ <b>ok</b> ] goldhen v2.4b18.12 staged</li>
-                <li>[ <b>ok</b> ] offline cache ready</li>
-            </ul>
-
-            <section class="status" id="wrap">
-                <div id="state">detecting firmware...</div>
-                <div id="det"></div>
-                <div id="cache"></div>
-            </section>
-
-            <a class="nodeplay" href="https://nodeplay.net/" target="_blank" rel="noopener">
-                <span><span class="np-label">Premium game servers</span><span class="np-name">Node<b>Play</b></span></span>
-                <span class="np-open">OPEN &#8599;</span>
-            </a>
-
-            <footer class="foot">
-                Author: <a href="https://t.me/sudo....">BlackArch</a> // Telegram: <........</a>
-            </footer>
-        </main>
-    </div>
-
-<script>
-(function () {
-    var stateEl = document.getElementById("state");
-    var detEl = document.getElementById("det");
-    var cacheEl = document.getElementById("cache");
-    function setState(t, c) { stateEl.textContent = t; stateEl.className = c || ""; }
-    function setCache(t, ok) { cacheEl.textContent = t; cacheEl.className = ok ? "cacheok" : ""; }
-    // ES5 query parser (no URLSearchParams on old WebKit).
-    function queryValue(name) {
-        var match = new RegExp("[?&]" + name + "=([^&]*)").exec(location.search);
-        return match ? decodeURIComponent(match[1]) : null;
-    }
-
-    // Firmwares with measured kernel tables. KEEP IN SYNC with ps4_offsets.js.
-    // The PS4 reports its minor as two hex digits in the UA (13.52 -> 0x52).
-    var SUPPORTED = { 1302: 1, 1304: 1, 1350: 1, 1352: 1 };
-
-    var key = null, fwnum = null;
-    var m = /PlayStation\s+4[\/ ](\d+)\.(\d+)/.exec(navigator.userAgent);
-    if (m) {
-        var minor = parseInt(m[2], 16);
-        var ms = minor.toString(16);
-        if (ms.length < 2) ms = "0" + ms;
-        key = m[1] + "." + ms;
-        fwnum = parseInt(m[1], 10) * 100 + parseInt(ms, 10);
-    }
-
-    var forced = queryValue("force") === "1";
-    var supported = forced || (fwnum !== null && SUPPORTED[fwnum] === 1);
-
-    detEl.innerHTML = "firmware <b>" + (key || "unknown") + "</b>"
-        + " &middot; <b>" + (supported ? "supported" : "unsupported") + "</b>";
-
-    var target = "jb.html" + location.search;
-    // The chain renders its log only in log mode (?log=1); enforce it so the
-    // exploit output and the failure watchdog always have DOM to work with.
-    if (location.search.indexOf("log=") === -1) {
-        target += (location.search ? "&" : "?") + "log=1";
-    }
-    function go() {
-        setState("loading jailbreak...", "warn");
-        location.replace(target);
-    }
-
-    function waitForTap(msg, action) {
-        setState(msg, "warn");
-        function fire() {
-            window.removeEventListener("click", fire);
-            window.removeEventListener("keydown", fire);
-            action();
-        }
-        window.addEventListener("click", fire);
-        window.addEventListener("keydown", fire);
-    }
-
-    // A UA quirk on a real console must never lock it out: unsupported
-    // firmwares get a warning but can still proceed with a tap.
-    if (!supported) {
-        setState("UNSUPPORTED FIRMWARE", "bad");
-        waitForTap("UNSUPPORTED (" + (key || "unknown") + ") -- press X or tap to run anyway", go);
-        return;
-    }
-
-    function waitForDownload() {
-        setCache("checking cache...");
-        ac.addEventListener("downloading",
-            function () { setCache("caching for offline (first run)..."); }, false);
-        ac.addEventListener("progress", function (e) {
-            if (e && e.total)
-                setCache("caching " + Math.round((e.loaded / e.total) * 100) + "%");
-        }, false);
-
-        ac.addEventListener("cached", function () {
-            setCache("cached for offline use", true);
-            waitForTap("CACHED (first run) -- press X or tap to run", go);
-        }, false);
-        ac.addEventListener("updateready", function () {
-            try { ac.swapCache(); } catch (e) {}
-            setCache("update downloaded", true);
-            waitForTap("UPDATE READY -- press X or tap to reload & run",
-                       function () { location.reload(); });
-        }, false);
-
-        ac.addEventListener("noupdate", function () {
-            setCache("cached -- offline ready", true);
-            go();
-        }, false);
-        ac.addEventListener("error", function () {
-            setCache("cache unavailable");
-            waitForTap("CACHE FAILED -- press X or tap to run anyway", go);
-        }, false);
-        ac.addEventListener("obsolete", function () {
-            setCache("cache obsolete");
-            waitForTap("CACHE OBSOLETE -- press X or tap to run", go);
-        }, false);
-    }
-
-    var ac = window.applicationCache;
-    if (!ac || !document.documentElement.hasAttribute("manifest")) {
-        go();
-    } else if (!navigator.onLine) {
-        setCache("offline -- from cache", true);
-        go();
-    } else if (ac.status === ac.IDLE) {
-        // Manifest revalidation is async and usually has NOT finished when
-        // this inline script runs. Launching now would race a background
-        // re-download of the whole host on update days (-> OOM mid-exploit).
-        // Wait briefly, then re-evaluate the real status.
-        setCache("cached -- verifying up to date...");
-        setTimeout(function () {
-            if (ac.status === ac.CHECKING || ac.status === ac.DOWNLOADING) {
-                setCache("update found -- downloading...");
-                waitForDownload();
-            } else if (ac.status === ac.UPDATEREADY) {
-                try { ac.swapCache(); } catch (e) {}
-                setCache("update downloaded", true);
-                waitForTap("UPDATE READY -- press X or tap to reload & run",
-                           function () { location.reload(); });
-            } else {
-                setCache("cached", true);
-                go();
-            }
-        }, 3000);
-    } else if (ac.status === ac.UPDATEREADY) {
-        try { ac.swapCache(); } catch (e) {}
-        setCache("update downloaded", true);
-        waitForTap("UPDATE READY -- press X or tap to reload & run",
-                   function () { location.reload(); });
-    } else {
-        waitForDownload();
-    }
-})();
-</script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en" manifest="cache.manifest">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PSPULSE // PS4 13.02-13.52 HOST / GOLDHEN</title>
-<link rel="icon" type="image/png" href="../../pspulse.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>EduGps4 // HOST PS4 13.02-13.52 / GOLDHEN · Eduxds2</title>
+<link rel="icon" type="image/png" href="Gps4.png">
 <style>
     :root {
         --bg-dark: #090d16;
@@ -320,6 +26,9 @@
     html, body { min-height: 100%; }
     body {
         background-color: var(--bg-dark);
+        background-image: 
+            radial-gradient(circle at 15% 20%, rgba(157, 78, 221, 0.12) 0%, transparent 45%),
+            radial-gradient(circle at 85% 80%, rgba(0, 210, 255, 0.1) 0%, transparent 45%);
         color: var(--text-main);
         display: flex;
         flex-direction: column;
@@ -328,7 +37,7 @@
     }
     a { color: inherit; text-decoration: none; }
 
-    /* HEADER */
+    /* HEADER GLOBAL SUPERIOR ESTILO EDUXDS2 */
     header {
         background: #0b111e;
         border-bottom: 1px solid var(--border);
@@ -336,20 +45,22 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        gap: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.4);
         position: sticky;
         top: 0;
         z-index: 100;
     }
-    .brand-header { display: flex; align-items: center; }
-    .gengar-logo {
+    .brand-header { display: flex; align-items: center; gap: 14px; }
+    .gps4-logo {
         width: 44px;
         height: 44px;
-        margin-right: 12px;
-        filter: drop-shadow(0 0 10px rgba(157, 78, 221, 0.7));
+        object-fit: contain;
+        filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.7));
         flex-shrink: 0;
     }
     header h1 {
-        font-size: 1.2rem;
+        font-size: 1.25rem;
         color: var(--accent);
         background: linear-gradient(45deg, var(--accent), var(--accent-pink));
         -webkit-background-clip: text;
@@ -359,25 +70,38 @@
         letter-spacing: 1px;
         font-weight: 800;
     }
-    .brand-sub { font-size: 0.75rem; color: var(--accent); font-weight: 700; }
+    .brand-sub { font-size: 0.75rem; color: var(--accent); font-weight: 700; letter-spacing: 0.5px; }
+    
     .pill {
-        background: var(--card-bg);
-        border: 1px solid var(--border);
+        background: rgba(0, 210, 255, 0.1);
+        border: 1px solid var(--accent);
         border-radius: 20px;
-        color: var(--text-muted);
+        color: var(--accent);
         font-size: 0.8rem;
         font-weight: 700;
         padding: 6px 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
-    .pill::before { color: var(--success); content: "\25CF "; }
+    .pill::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        background-color: var(--accent);
+        border-radius: 50%;
+        box-shadow: 0 0 8px var(--accent);
+    }
 
-    /* PAGE */
-    .app { flex: 1 0 auto; margin: 0 auto; max-width: 1000px; padding: 40px; width: 100%; }
-    .header-box h2 { font-size: 1.8rem; font-weight: 800; line-height: 1.2; margin-bottom: 6px; }
+    /* CONTEÚDO PRINCIPAL */
+    .app { flex: 1 0 auto; margin: 0 auto; max-width: 1000px; padding: 40px 24px; width: 100%; }
+    .header-box h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 800; line-height: 1.2; margin-bottom: 6px; }
     .header-box h2 span { color: var(--accent); }
-    .header-box p { color: var(--text-muted); font-size: 1rem; }
+    .header-box p { color: var(--text-muted); font-size: 1rem; margin-top: 8px; }
 
-    .chips { margin: 16px 0 6px; }
+    .chips { margin: 20px 0 10px; }
     .chip {
         background: var(--card-bg);
         border: 1px solid var(--border);
@@ -391,7 +115,7 @@
     }
     .chip b { color: var(--success); font-weight: 700; }
 
-    /* STATUS CARD */
+    /* CARTÃO DE STATUS */
     .status {
         background: linear-gradient(145deg, var(--card-bg), #0f172a);
         border: 1px solid var(--border);
@@ -428,7 +152,7 @@
         border-radius: 16px;
         display: flex;
         justify-content: space-between;
-        margin-top: 20px;
+        margin-top: 24px;
         padding: 20px 24px;
         transition: all 0.3s ease;
     }
@@ -439,7 +163,7 @@
     .np-name b { color: var(--accent-pink); font-weight: 800; }
     .np-open { color: var(--accent); font-size: 0.9rem; font-weight: 700; }
 
-    /* FOOTER */
+    /* RODAPÉ */
     .foot {
         border-top: 1px solid var(--border);
         color: var(--text-muted);
@@ -453,7 +177,7 @@
 
     @media (max-width: 760px) {
         body { overflow: auto; }
-        header { padding: 12px 14px; }
+        header { padding: 12px 16px; }
         .app { padding: 20px 14px; }
         .header-box h2 { font-size: 1.4rem; }
         .status { padding: 20px 18px; }
@@ -463,63 +187,43 @@
 </head>
 <body>
 
+    <!-- HEADER GLOBAL EDUXDS2 -->
     <header>
         <div class="brand-header">
-            <svg class="gengar-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <radialGradient id="ghostBody" cx="38%" cy="32%" r="75%">
-                        <stop offset="0%" stop-color="#b06fe0"/>
-                        <stop offset="55%" stop-color="#8b3fd1"/>
-                        <stop offset="100%" stop-color="#5a189a"/>
-                    </radialGradient>
-                    <linearGradient id="ghostSpike" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#7b2cbf"/>
-                        <stop offset="100%" stop-color="#4c1580"/>
-                    </linearGradient>
-                </defs>
-                <path d="M22 30 L14 12 L30 22 Z" fill="url(#ghostSpike)"/>
-                <path d="M78 30 L86 12 L70 22 Z" fill="url(#ghostSpike)"/>
-                <path d="M50 12 C 72 12, 86 28, 86 50 C 86 62, 82 68, 86 74 C 82 76, 78 73, 75 76 C 71 79, 71 74, 66 78 C 62 81, 62 76, 57 80 C 53 83, 47 83, 43 80 C 38 76, 38 81, 34 78 C 29 74, 29 79, 25 76 C 22 73, 18 76, 14 74 C 18 68, 14 62, 14 50 C 14 28, 28 12, 50 12 Z" fill="url(#ghostBody)" stroke="#3c096c" stroke-width="1.5"/>
-                <path d="M27 42 Q 37 34, 46 44 Q 38 50, 27 42 Z" fill="#fefefe"/>
-                <circle cx="38" cy="43" r="3.4" fill="#0d0221"/>
-                <path d="M73 42 Q 63 34, 54 44 Q 62 50, 73 42 Z" fill="#fefefe"/>
-                <circle cx="62" cy="43" r="3.4" fill="#0d0221"/>
-                <path d="M30 58 Q 50 76, 70 58 Q 66 68, 50 70 Q 34 68, 30 58 Z" fill="#1a0b2e"/>
-                <path d="M33 59 Q 50 71, 67 59" stroke="#ff2fb0" stroke-width="1.5" fill="none" opacity="0.7"/>
-            </svg>
+            <img src="Gps4.png" alt="Logo EduGps4" class="gps4-logo">
             <div>
-                <h1>&#9889; PSPULSE</h1>
-                <div class="brand-sub">PS4 Hosts &middot; GoldHEN</div>
+                <h1>⚡ EduGps4</h1>
+                <div class="brand-sub">Eduxds2 · Host PS4 · GoldHEN</div>
             </div>
         </div>
-        <span class="pill">fw 13.02-13.52 ready</span>
+        <span class="pill">FW 13.02-13.52 Pronto</span>
     </header>
 
     <main class="app">
         <div class="header-box">
-            <h2>SlopKit <span>13.02-13.52</span> host</h2>
-            <p>WebKit research host by PlayStation Pulse.</p>
+            <h2>Host SlopKit <span>13.02-13.52</span></h2>
+            <p>Carregador automático offline do GoldHEN por EduGps4.</p>
         </div>
 
         <div class="chips">
-            <span class="chip"><b>ok</b> slopkit chain ready</span>
-            <span class="chip"><b>ok</b> goldhen v2.4b18.12 staged</span>
-            <span class="chip"><b>ok</b> offline cache ready</span>
+            <span class="chip"><b>ok</b> cadeia slopkit pronta</span>
+            <span class="chip"><b>ok</b> goldhen v2.4b18.12 preparado</span>
+            <span class="chip"><b>ok</b> cache offline pronto</span>
         </div>
 
         <section class="status" id="wrap">
-            <div id="state">detecting firmware...</div>
+            <div id="state">Detectando firmware...</div>
             <div id="det"></div>
             <div id="cache"></div>
         </section>
 
         <a class="nodeplay" href="https://nodeplay.net/" target="_blank" rel="noopener">
-            <span><span class="np-label">Premium game servers</span><span class="np-name">Node<b>Play</b></span></span>
-            <span class="np-open">OPEN &#8599;</span>
+            <span><span class="np-label">Servidores de jogos premium</span><span class="np-name">Node<b>Play</b></span></span>
+            <span class="np-open">ABRIR &#8599;</span>
         </a>
 
         <footer class="foot">
-            Author: <a href="https://t.me/sudoBlackArch">BlackArch</a> // Telegram: <a href="https://t.me/PlayStation_Pulse">PlayStation Pulse</a>
+            Autor: <a href="https://t.me/sudoBlackArch">BlackArch</a> // Telegram: <a href="https://t.me/PlayStation_Pulse">PlayStation Pulse</a>
         </footer>
     </main>
 
@@ -530,14 +234,12 @@
     var cacheEl = document.getElementById("cache");
     function setState(t, c) { stateEl.textContent = t; stateEl.className = c || ""; }
     function setCache(t, ok) { cacheEl.textContent = t; cacheEl.className = ok ? "cacheok" : ""; }
-    // ES5 query parser (no URLSearchParams on old WebKit).
+
     function queryValue(name) {
         var match = new RegExp("[?&]" + name + "=([^&]*)").exec(location.search);
         return match ? decodeURIComponent(match[1]) : null;
     }
 
-    // Firmwares with measured kernel tables. KEEP IN SYNC with ps4_offsets.js.
-    // The PS4 reports its minor as two hex digits in the UA (13.52 -> 0x52).
     var SUPPORTED = { 1302: 1, 1304: 1, 1350: 1, 1352: 1 };
 
     var key = null, fwnum = null;
@@ -553,17 +255,16 @@
     var forced = queryValue("force") === "1";
     var supported = forced || (fwnum !== null && SUPPORTED[fwnum] === 1);
 
-    detEl.innerHTML = "firmware <b>" + (key || "unknown") + "</b>"
-        + " &middot; <b>" + (supported ? "supported" : "unsupported") + "</b>";
+    detEl.innerHTML = "Firmware <b>" + (key || "desconhecido") + "</b>"
+        + " &middot; <b>" + (supported ? "suportado" : "não suportado") + "</b>";
 
     var target = "jb.html" + location.search;
-    // The chain renders its log only in log mode (?log=1); enforce it so the
-    // exploit output and the failure watchdog always have DOM to work with.
+
     if (location.search.indexOf("log=") === -1) {
         target += (location.search ? "&" : "?") + "log=1";
     }
     function go() {
-        setState("loading jailbreak...", "warn");
+        setState("Carregando desbloqueio...", "warn");
         location.replace(target);
     }
 
@@ -578,45 +279,43 @@
         window.addEventListener("keydown", fire);
     }
 
-    // A UA quirk on a real console must never lock it out: unsupported
-    // firmwares get a warning but can still proceed with a tap.
     if (!supported) {
-        setState("UNSUPPORTED FIRMWARE", "bad");
-        waitForTap("UNSUPPORTED (" + (key || "unknown") + ") -- press X or tap to run anyway", go);
+        setState("FIRMWARE NÃO SUPORTADO", "bad");
+        waitForTap("NÃO SUPORTADO (" + (key || "desconhecido") + ") -- pressione X ou toque na tela para executar assim mesmo", go);
         return;
     }
 
     function waitForDownload() {
-        setCache("checking cache...");
+        setCache("Verificando cache...");
         ac.addEventListener("downloading",
-            function () { setCache("caching for offline (first run)..."); }, false);
+            function () { setCache("Salvando em cache para uso offline (primeira execução)..."); }, false);
         ac.addEventListener("progress", function (e) {
             if (e && e.total)
-                setCache("caching " + Math.round((e.loaded / e.total) * 100) + "%");
+                setCache("Salvando em cache " + Math.round((e.loaded / e.total) * 100) + "%");
         }, false);
 
         ac.addEventListener("cached", function () {
-            setCache("cached for offline use", true);
-            waitForTap("CACHED (first run) -- press X or tap to run", go);
+            setCache("Armazenado em cache para uso offline", true);
+            waitForTap("EM CACHE (primeira execução) -- pressione X ou toque na tela para executar", go);
         }, false);
         ac.addEventListener("updateready", function () {
             try { ac.swapCache(); } catch (e) {}
-            setCache("update downloaded", true);
-            waitForTap("UPDATE READY -- press X or tap to reload & run",
+            setCache("Atualização baixada", true);
+            waitForTap("ATUALIZAÇÃO PRONTA -- pressione X ou toque na tela para recarregar e executar",
                        function () { location.reload(); });
         }, false);
 
         ac.addEventListener("noupdate", function () {
-            setCache("cached -- offline ready", true);
+            setCache("Em cache -- pronto para uso offline", true);
             go();
         }, false);
         ac.addEventListener("error", function () {
-            setCache("cache unavailable");
-            waitForTap("CACHE FAILED -- press X or tap to run anyway", go);
+            setCache("Cache indisponível");
+            waitForTap("FALHA NO CACHE -- pressione X ou toque na tela para executar assim mesmo", go);
         }, false);
         ac.addEventListener("obsolete", function () {
-            setCache("cache obsolete");
-            waitForTap("CACHE OBSOLETE -- press X or tap to run", go);
+            setCache("Cache obsoleto");
+            waitForTap("CACHE OBSOLETO -- pressione X ou toque na tela para executar", go);
         }, false);
     }
 
@@ -624,32 +323,28 @@
     if (!ac || !document.documentElement.hasAttribute("manifest")) {
         go();
     } else if (!navigator.onLine) {
-        setCache("offline -- from cache", true);
+        setCache("Offline -- executando a partir do cache", true);
         go();
     } else if (ac.status === ac.IDLE) {
-        // Manifest revalidation is async and usually has NOT finished when
-        // this inline script runs. Launching now would race a background
-        // re-download of the whole host on update days (-> OOM mid-exploit).
-        // Wait briefly, then re-evaluate the real status.
-        setCache("cached -- verifying up to date...");
+        setCache("Em cache -- verificando atualizações...");
         setTimeout(function () {
             if (ac.status === ac.CHECKING || ac.status === ac.DOWNLOADING) {
-                setCache("update found -- downloading...");
+                setCache("Atualização encontrada -- baixando...");
                 waitForDownload();
             } else if (ac.status === ac.UPDATEREADY) {
                 try { ac.swapCache(); } catch (e) {}
-                setCache("update downloaded", true);
-                waitForTap("UPDATE READY -- press X or tap to reload & run",
+                setCache("Atualização baixada", true);
+                waitForTap("ATUALIZAÇÃO PRONTA -- pressione X ou toque na tela para recarregar e executar",
                            function () { location.reload(); });
             } else {
-                setCache("cached", true);
+                setCache("Em cache", true);
                 go();
             }
         }, 3000);
     } else if (ac.status === ac.UPDATEREADY) {
         try { ac.swapCache(); } catch (e) {}
-        setCache("update downloaded", true);
-        waitForTap("UPDATE READY -- press X or tap to reload & run",
+        setCache("Atualização baixada", true);
+        waitForTap("ATUALIZAÇÃO PRONTA -- pressione X ou toque na tela para recarregar e executar",
                    function () { location.reload(); });
     } else {
         waitForDownload();
