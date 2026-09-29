@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" manifest="cache.manifest">
+<html lang="pt-BR" manifest="cache.manifest">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PSPULSE // PS4 13.02-13.52 HOST / GOLDHEN</title>
-<link rel="icon" type="image/png" href="../../pspulse.png">
+<title>EduGps4 // PS4 13.02-13.52 HOST / GOLDHEN</title>
+<link rel="icon" type="image/png" href="Gps4.png">
 <style>
     :root {
         --bg: #151515;
@@ -81,25 +81,6 @@
     .bad { color: var(--red); }
     .warn { color: var(--amber); }
 
-    /* NodePlay */
-    .nodeplay {
-        align-items: center;
-        background: var(--panel);
-        border: 1px solid var(--line-bright);
-        display: flex;
-        justify-content: space-between;
-        margin-top: 14px;
-        min-height: 68px;
-        padding: 10px 18px;
-        text-decoration: none;
-    }
-    .nodeplay:hover, .nodeplay:focus { background: var(--panel-2); border-color: var(--accent); outline: 0; }
-    .nodeplay:focus { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent); }
-    .np-label { color: var(--dim); display: block; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
-    .np-name { color: var(--text); display: block; font-size: 24px; margin-top: 2px; }
-    .np-name b { color: var(--accent); font-weight: 400; }
-    .np-open { color: var(--accent); font-size: 14px; }
-
     /* Footer */
     .foot {
         border-top: 1px solid var(--line);
@@ -126,33 +107,28 @@
 <body>
     <div class="app">
         <header class="bar">
-            <span><b>PSPULSE</b> // ps4 hosts</span>
-            <span class="bar-fw">fw 13.02-13.52 ready</span>
+            <span><b>EDUGPS4</b> // PS4 HOST</span>
+            <span class="bar-fw">fw 13.02-13.52 pronto</span>
         </header>
 
         <main class="layout">
-            <p class="kicker">$ ./launch --slopkit relapse</p>
-            <h1>SlopKit <em>13.02-13.52</em> host</h1>
-            <p class="sub">WebKit research host by PlayStation Pulse.</p>
+            <p class="kicker">$ ./edugps4 --init</p>
+            <h1>EduGps4 <em>13.02-13.52</em> host</h1>
+            <p class="sub">Host personalizado por EduGps4.</p>
             <ul class="boot">
-                <li>[ <b>ok</b> ] slopkit chain ready</li>
-                <li>[ <b>ok</b> ] goldhen v2.4b18.12 staged</li>
-                <li>[ <b>ok</b> ] offline cache ready</li>
+                <li>[ <b>ok</b> ] slopkit chain pronto</li>
+                <li>[ <b>ok</b> ] goldhen v2.4b18.12 carregado</li>
+                <li>[ <b>ok</b> ] cache offline preparado</li>
             </ul>
 
             <section class="status" id="wrap">
-                <div id="state">detecting firmware...</div>
+                <div id="state">detectando firmware...</div>
                 <div id="det"></div>
                 <div id="cache"></div>
             </section>
 
-            <a class="nodeplay" href="https://nodeplay.net/" target="_blank" rel="noopener">
-                <span><span class="np-label">Premium game servers</span><span class="np-name">Node<b>Play</b></span></span>
-                <span class="np-open">OPEN &#8599;</span>
-            </a>
-
             <footer class="foot">
-                Author: <a href="https://t.me/sudoBlackArch">BlackArch</a> // Telegram: <a href="https://t.me/PlayStation_Pulse">PlayStation Pulse</a>
+                EduGps4 &copy; Host Personalizado PS4
             </footer>
         </main>
     </div>
@@ -187,8 +163,8 @@
     var forced = queryValue("force") === "1";
     var supported = forced || (fwnum !== null && SUPPORTED[fwnum] === 1);
 
-    detEl.innerHTML = "firmware <b>" + (key || "unknown") + "</b>"
-        + " &middot; <b>" + (supported ? "supported" : "unsupported") + "</b>";
+    detEl.innerHTML = "firmware <b>" + (key || "desconhecido") + "</b>"
+        + " &middot; <b>" + (supported ? "suportado" : "não suportado") + "</b>";
 
     var target = "jb.html" + location.search;
     // The chain renders its log only in log mode (?log=1); enforce it so the
@@ -197,7 +173,7 @@
         target += (location.search ? "&" : "?") + "log=1";
     }
     function go() {
-        setState("loading jailbreak...", "warn");
+        setState("carregando jailbreak...", "warn");
         location.replace(target);
     }
 
@@ -215,42 +191,42 @@
     // A UA quirk on a real console must never lock it out: unsupported
     // firmwares get a warning but can still proceed with a tap.
     if (!supported) {
-        setState("UNSUPPORTED FIRMWARE", "bad");
-        waitForTap("UNSUPPORTED (" + (key || "unknown") + ") -- press X or tap to run anyway", go);
+        setState("FIRMWARE NÃO SUPORTADO", "bad");
+        waitForTap("NÃO SUPORTADO (" + (key || "desconhecido") + ") -- pressione X ou toque para executar assim mesmo", go);
         return;
     }
 
     function waitForDownload() {
-        setCache("checking cache...");
+        setCache("verificando cache...");
         ac.addEventListener("downloading",
-            function () { setCache("caching for offline (first run)..."); }, false);
+            function () { setCache("guardando para uso offline (primeira execução)..."); }, false);
         ac.addEventListener("progress", function (e) {
             if (e && e.total)
-                setCache("caching " + Math.round((e.loaded / e.total) * 100) + "%");
+                setCache("a guardar " + Math.round((e.loaded / e.total) * 100) + "%");
         }, false);
 
         ac.addEventListener("cached", function () {
-            setCache("cached for offline use", true);
-            waitForTap("CACHED (first run) -- press X or tap to run", go);
+            setCache("guardado para uso offline", true);
+            waitForTap("CACHE PRONTO -- pressione X ou toque para executar", go);
         }, false);
         ac.addEventListener("updateready", function () {
             try { ac.swapCache(); } catch (e) {}
-            setCache("update downloaded", true);
-            waitForTap("UPDATE READY -- press X or tap to reload & run",
+            setCache("atualização descarregada", true);
+            waitForTap("ATUALIZAÇÃO PRONTA -- pressione X ou toque para recarregar",
                        function () { location.reload(); });
         }, false);
 
         ac.addEventListener("noupdate", function () {
-            setCache("cached -- offline ready", true);
+            setCache("cache pronto -- offline disponível", true);
             go();
         }, false);
         ac.addEventListener("error", function () {
-            setCache("cache unavailable");
-            waitForTap("CACHE FAILED -- press X or tap to run anyway", go);
+            setCache("cache indisponível");
+            waitForTap("FALHA NO CACHE -- pressione X ou toque para executar assim mesmo", go);
         }, false);
         ac.addEventListener("obsolete", function () {
-            setCache("cache obsolete");
-            waitForTap("CACHE OBSOLETE -- press X or tap to run", go);
+            setCache("cache obsoleto");
+            waitForTap("CACHE OBSOLETO -- pressione X ou toque para executar", go);
         }, false);
     }
 
@@ -258,32 +234,28 @@
     if (!ac || !document.documentElement.hasAttribute("manifest")) {
         go();
     } else if (!navigator.onLine) {
-        setCache("offline -- from cache", true);
+        setCache("offline -- a executar do cache", true);
         go();
     } else if (ac.status === ac.IDLE) {
-        // Manifest revalidation is async and usually has NOT finished when
-        // this inline script runs. Launching now would race a background
-        // re-download of the whole host on update days (-> OOM mid-exploit).
-        // Wait briefly, then re-evaluate the real status.
-        setCache("cached -- verifying up to date...");
+        setCache("cache pronto -- a verificar atualizações...");
         setTimeout(function () {
             if (ac.status === ac.CHECKING || ac.status === ac.DOWNLOADING) {
-                setCache("update found -- downloading...");
+                setCache("atualização encontrada -- a descarregar...");
                 waitForDownload();
             } else if (ac.status === ac.UPDATEREADY) {
                 try { ac.swapCache(); } catch (e) {}
-                setCache("update downloaded", true);
-                waitForTap("UPDATE READY -- press X or tap to reload & run",
+                setCache("atualização descarregada", true);
+                waitForTap("ATUALIZAÇÃO PRONTA -- pressione X ou toque para recarregar",
                            function () { location.reload(); });
             } else {
-                setCache("cached", true);
+                setCache("cache pronto", true);
                 go();
             }
         }, 3000);
     } else if (ac.status === ac.UPDATEREADY) {
         try { ac.swapCache(); } catch (e) {}
-        setCache("update downloaded", true);
-        waitForTap("UPDATE READY -- press X or tap to reload & run",
+        setCache("atualização descarregada", true);
+        waitForTap("ATUALIZAÇÃO PRONTA -- pressione X ou toque para recarregar",
                    function () { location.reload(); });
     } else {
         waitForDownload();
