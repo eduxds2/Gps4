@@ -2,7 +2,7 @@
 class RPCWorker {
   constructor(name) {
     if (typeof name !== "string") {
-      throw new Error(`${name} not a valid name !!`);
+      throw new Error(`${name} não é um nome válido !!`);
     }
 
     this.id = 0;
@@ -50,7 +50,7 @@ class RPCWorker {
   }
 
   async init() {
-    logger.debug(`initializing ${this.name}...`);
+    logger.debug(`Inicializando ${this.name}...`);
 
     const marker_arr = await this.execute("init", this.name);
 
@@ -82,7 +82,7 @@ class RPCWorker {
 
     await this.execute("setup", leak_addr, webkit_base);
 
-    logger.debug(`${this.name} initialized !!`);
+    logger.debug(`${this.name} inicializado com sucesso !!`);
   }
 }
 //#endregion
