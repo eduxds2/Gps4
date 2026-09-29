@@ -1,271 +1,254 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" manifest="cache.manifest">
 <head>
-    <link rel="icon" type="image/png" href="Gps4.png">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>EduGps4 // HOSTS PS4 · Eduxds2</title>
-    <style>
-        :root {
-            --bg-dark: #050b05;
-            --card-bg: #0c180c;
-            --card-hover: #142814;
-            --accent: #00ff66;         /* Verde neon principal */
-            --accent-dim: #00b347;     /* Verde secundário */
-            --accent-bright: #00ff88;  /* Verde de destaque */
-            --text-main: #e6ffe6;
-            --text-muted: #80c080;
-            --success: #00ff66;
-            --border: #1a3d1a;
-        }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>EduGps4 // 13.02-13.52 GOLDHEN · Eduxds2</title>
+<link rel="icon" type="image/png" href="Gps4.png">
+<style>
+    :root {
+        --bg-dark: #090d16;
+        --card-bg: #131c2e;
+        --card-hover: #1c2a45;
+        --accent: #00d2ff;
+        --accent-purple: #9d4edd;
+        --accent-pink: #ff007f;
+        --text-main: #ffffff;
+        --text-muted: #a0aec0;
+        --success: #00e676;
+        --danger: #ff1744;
+        --warning: #facc15;
+        --border: #2d3748;
+    }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
-        html { background: var(--bg-dark); }
-        html, body { min-height: 100%; }
-        body {
-            background-color: var(--bg-dark);
-            background-image: 
-                radial-gradient(circle at 15% 20%, rgba(0, 255, 102, 0.08) 0%, transparent 45%),
-                radial-gradient(circle at 85% 80%, rgba(0, 179, 71, 0.08) 0%, transparent 45%);
-            color: var(--text-main);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        a { color: inherit; text-decoration: none; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+    html { background: var(--bg-dark); }
+    html, body { min-height: 100%; }
+    
+    body {
+        background-color: var(--bg-dark);
+        background-image: 
+            radial-gradient(circle at 15% 20%, rgba(157, 78, 221, 0.12) 0%, transparent 45%),
+            radial-gradient(circle at 85% 80%, rgba(0, 210, 255, 0.1) 0%, transparent 45%);
+        color: var(--text-main);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
 
-        .app { display: flex; flex-direction: column; margin: 0 auto; max-width: 1220px; min-height: 100vh; padding: 24px; width: 100%; }
+    /* HEADER GLOBAL SUPERIOR ESTILO EDUXDS2 */
+    header {
+        background: #0b111e;
+        border-bottom: 1px solid var(--border);
+        padding: 16px 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
 
-        /* HEADER GLOBAL SUPERIOR */
-        header {
-            background: #081208;
-            border-bottom: 1px solid var(--border);
-            padding: 16px 30px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-            border-radius: 12px;
-        }
+    .brand-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
 
-        .brand-header {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
+    .gps4-logo {
+        width: 44px;
+        height: 44px;
+        object-fit: contain;
+        filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.7));
+        flex-shrink: 0;
+    }
 
-        /* LOGO Gps4.png COM BRILHO NEON VERDE */
-        .gps4-logo {
-            width: 44px;
-            height: 44px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 2px solid var(--accent);
-            box-shadow: 0 0 12px rgba(0, 255, 102, 0.6);
-            background-color: #000;
-            flex-shrink: 0;
-        }
+    header h1 {
+        font-size: 1.25rem;
+        background: linear-gradient(45deg, var(--accent), var(--accent-pink));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 800;
+    }
 
-        header h1 {
-            font-size: 1.25rem;
-            background: linear-gradient(45deg, var(--accent), #00b347);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 800;
-        }
+    .brand-sub {
+        font-size: 0.75rem;
+        color: var(--accent);
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
 
-        .brand-sub {
-            font-size: 0.75rem;
-            color: var(--accent);
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
+    .badge-chain {
+        background: rgba(0, 210, 255, 0.1);
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
 
-        .bar-ready {
-            background: rgba(0, 255, 102, 0.1);
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            padding: 6px 14px;
-            border-radius: 999px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+    .badge-chain::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        background-color: var(--accent);
+        border-radius: 50%;
+        box-shadow: 0 0 8px var(--accent);
+    }
 
-        .bar-ready::before {
-            content: "";
-            width: 8px;
-            height: 8px;
-            background-color: var(--accent);
-            border-radius: 50%;
-            box-shadow: 0 0 8px var(--accent);
-        }
+    /* CONTAINER PRINCIPAL */
+    .app {
+        margin: 0 auto;
+        padding: 30px 24px;
+        width: min(100% - 48px, 1100px);
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
 
-        .layout { display: flex; flex: 1 0 auto; flex-direction: column; padding: 22px 0 0; }
+    /* STATUS DO EXPLOIT */
+    #state {
+        color: var(--accent);
+        font-size: 1.5rem;
+        font-weight: 800;
+        line-height: 1.3;
+        margin-bottom: 16px;
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 
-        h2 { font-size: clamp(32px, 5vw, 52px); font-weight: 800; letter-spacing: -.03em; line-height: 1; margin: 0; color: #fff; }
-        h2 em { color: var(--accent); font-style: normal; text-shadow: 0 0 10px rgba(0, 255, 102, 0.4); }
-        .sub { color: var(--text-muted); font-size: 1.1rem; margin: 14px 0 0; max-width: 720px; }
-        .boot { color: var(--text-muted); font-size: 14px; list-style: none; margin: 14px 0 0; padding: 0; }
-        .boot li { margin: 4px 0; }
-        .boot b { color: var(--accent); font-weight: 700; }
+    .ok { color: var(--success) !important; }
+    .bad { color: var(--danger) !important; }
+    .warn { color: var(--warning) !important; }
 
-        /* Menu */
-        .menu {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            margin-top: 22px;
-            padding: 20px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-        }
-        .menu-top {
-            align-items: baseline;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 16px;
-            padding-bottom: 10px;
-        }
-        .menu-title { color: var(--accent); font-size: 14px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
-        .menu-hint { color: var(--text-muted); font-size: 13px; }
-        .grid { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    /* CONSOLE DE SAÍDA DO EXPLOIT */
+    #out {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        color: var(--text-main);
+        font-family: 'Consolas', 'Liberation Mono', monospace;
+        font-size: 13.5px;
+        line-height: 1.6;
+        height: calc(100vh - 210px);
+        overflow-y: auto;
+        padding: 20px;
+        white-space: pre-wrap;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        position: relative;
+    }
 
-        .row {
-            align-items: center;
-            background: #050b05;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            display: flex;
-            min-height: 74px;
-            padding: 14px 18px;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
-        .row:hover, .row:focus {
-            background: var(--card-hover);
-            border-color: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: 0 0 12px rgba(0, 255, 102, 0.2);
-            outline: 0;
-        }
-        .num { color: var(--accent-dim); font-size: 16px; font-weight: 800; min-width: 42px; }
-        .row:hover .num, .row:focus .num { color: var(--accent); }
-        .name { color: #fff; display: block; font-size: 18px; font-weight: 700; line-height: 1.2; }
-        .meta { color: var(--text-muted); display: block; font-size: 13px; margin-top: 4px; }
-        .go { color: var(--text-muted); font-size: 12px; font-weight: 800; margin-left: auto; opacity: 0; padding-left: 12px; white-space: nowrap; transition: opacity 0.2s; }
-        .row:hover .go, .row:focus .go { opacity: 1; color: var(--accent); }
+    /* BARRA DE ROLAGEM ESTILIZADA */
+    #out::-webkit-scrollbar {
+        width: 8px;
+    }
+    #out::-webkit-scrollbar-track {
+        background: rgba(0,0,0,0.2);
+        border-radius: 8px;
+    }
+    #out::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 8px;
+    }
+    #out::-webkit-scrollbar-thumb:hover {
+        background: var(--accent-purple);
+    }
 
-        /* Rodapé */
-        .foot {
-            border-top: 1px solid var(--border);
-            color: var(--text-muted);
-            font-size: 13px;
-            margin-top: 24px;
-            padding: 16px 4px 4px;
-            text-align: center;
-        }
-        .foot a { color: var(--accent); font-weight: 700; }
-        .foot a:hover, .foot a:focus { color: var(--accent-bright); }
-
-        @media (max-width: 760px) {
-            header { padding: 12px 16px; }
-            .app { padding: 12px; }
-            .layout { padding-top: 14px; }
-            h2 { font-size: 32px; }
-            .sub { font-size: 15px; }
-            .grid { grid-template-columns: 1fr; }
-            .row { min-height: 64px; }
-            .menu-hint { display: none; }
-        }
-    </style>
+    @media (max-width: 760px) {
+        header { padding: 12px 16px; }
+        .badge-chain { font-size: 0.7rem; padding: 4px 10px; }
+        .app { padding: 16px 12px; width: 100%; }
+        #state { font-size: 1.2rem; margin-bottom: 12px; }
+        #out { height: calc(100vh - 170px); font-size: 12px; padding: 14px; }
+    }
+</style>
 </head>
 <body>
-    <div class="app">
-        <!-- HEADER GLOBAL -->
-        <header>
-            <div class="brand-header">
-                <img src="Gps4.png" alt="Logo EduGps4" class="gps4-logo">
-                <div>
-                    <h1>EduGps4</h1>
-                    <div class="brand-sub">Eduxds2 · PS4 Hosts · Menu Principal</div>
-                </div>
+
+    <!-- HEADER GLOBAL PADRÃO EDUXDS2 -->
+    <header>
+        <div class="brand-header">
+            <img src="Gps4.png" alt="Logo EduGps4" class="gps4-logo">
+            <div>
+                <h1>⚡ EduGps4 · GoldHEN</h1>
+                <div class="brand-sub">Eduxds2 · Host PS4 · FW 13.02-13.52</div>
             </div>
-            <span class="bar-ready">SISTEMA PRONTO</span>
-        </header>
+        </div>
 
-        <main class="layout">
-            <h2>Escolha o <em>firmware</em></h2>
-            <p class="sub">Selecione o host correspondente à versão de firmware instalada no seu PlayStation 4.</p>
-            <ul class="boot">
-                <li>[ <b>ok</b> ] 7 rotas de host detectadas</li>
-                <li>[ <b>ok</b> ] cache offline pronto</li>
-            </ul>
+        <div class="badge-chain">cadeia slopkit</div>
+    </header>
 
-            <section class="menu" aria-label="Menu de hosts por firmware">
-                <div class="menu-top">
-                    <span class="menu-title">Rotas Disponíveis</span>
-                    <span class="menu-hint">&uarr; &darr; navegar &nbsp; X selecionar</span>
-                </div>
-                <nav class="grid">
-                    <a class="row" href="1352/index.html">
-                        <span class="num">01</span>
-                        <span><span class="name">FW 13.02–13.52</span><span class="meta">SlopKit GoldHEN // host offline</span></span>
-                        <span class="go">[ SELECIONAR ]</span>
-                    </a>
-                    <a class="row" href="1300/version-selector.html">
-                        <span class="num">02</span>
-                        <span><span class="name">FW 11.00–13.00</span><span class="meta">SlopKit WebKit // host offline</span></span>
-                        <span class="go">[ SELECIONAR ]</span>
-                    </a>
-                    <a class="row" href="css/version-selector.html">
-                        <span class="num">03</span>
-                        <span><span class="name">FW 6.00–11.02</span><span class="meta">CSSFontFace // GoldHEN host</span></span>
-                        <span class="go">[ SELECIONAR ]</span>
-                    </a>
-                    <a class="row" href="900/version-selector.html">
-                        <span class="num">04</span>
-                        <span><span class="name">FW 9.00–9.60</span><span class="meta">PSFree / Lapse // GoldHEN host</span></span>
-                        <span class="go">[ SELECIONAR ]</span>
-                    </a>
-                    <a class="row" href="700/version-selector.html">
-                        <span class="num">05</span>
-                        <span><span class="name">FW 7.00–8.52</span><span class="meta">PSFree / Lapse // GoldHEN host</span></span>
-                        <span class="go">[ SELECIONAR ]</span>
-                    </a>
-                    <a class="row" href="672/index.html">
-                        <span class="num">06</span>
-                        <span><span class="name">FW 6.72</span><span class="meta">Host dedicado // utilitários</span></span>
-                        <span class="go">[ SELECIONAR ]</span>
-                    </a>
-                    <a class="row" href="505/index.html">
-                        <span class="num">07</span>
-                        <span><span class="name">FW 5.05</span><span class="meta">Host dedicado // utilitários</span></span>
-                        <span class="go">[ SELECIONAR ]</span>
-                    </a>
-                </nav>
-            </section>
-
-            <footer class="foot">
-                <div>Autor: <a href="https://t.me/sudoBlackArch">BlackArch</a> // Telegram: <a href="https://t.me/PlayStation_Pulse">PlayStation Pulse</a></div>
-                <div>Projetos Originais: <a href="https://github.com/itskenethb?tab=repositories">itskenethb</a></div>
-            </footer>
-        </main>
+    <div class="app">
+        <div id="state">Carregando desbloqueio...</div>
+        <div id="out"></div>
     </div>
 
-    <script>
-        (function () {
-            var first = document.querySelector('.row');
-            if (first) first.focus();
-        })();
-    </script>
+<script type="module">import "./jb.js";</script>
+<script>
+// Auto-recarregamento controlado quando a primitiva desiste.
+(function () {
+    var KEY = "edugps4-1352-reloads";
+    var MAX = 2;
+    var WINDOW_MS = 10 * 60 * 1000;
+    var handled = false;
+    function readBudget() {
+        var rec = null;
+        try { rec = JSON.parse(sessionStorage.getItem(KEY) || "null"); } catch (e) { rec = null; }
+        var now = Date.now();
+        if (!rec || typeof rec.n !== "number" || (now - rec.t) > WINDOW_MS) return { n: 0, t: now };
+        return rec;
+    }
+    function spendBudget() {
+        var rec = readBudget();
+        rec.n++;
+        rec.t = Date.now();
+        try {
+            sessionStorage.setItem(KEY, JSON.stringify(rec));
+            var check = JSON.parse(sessionStorage.getItem(KEY) || "null");
+            if (check && check.n === rec.n) return rec;
+        } catch (e) {}
+        return null;
+    }
+    function successSeen(txt) {
+        var lines = txt.split("\n");
+        for (var i = lines.length - 1; i >= 0; i--) {
+            if (lines[i].indexOf("PAYLOAD-RUNNING") !== -1) {
+                return lines[i].indexOf("PROOF-OK") === 0;
+            }
+        }
+        return false;
+    }
+    setInterval(function () {
+        try {
+            if (handled) return;
+            var st = document.getElementById("state");
+            var out = document.getElementById("out");
+            var txt = out ? out.textContent : "";
+            if (successSeen(txt)) {
+                try { sessionStorage.removeItem(KEY); } catch (e) {}
+                handled = true;
+                return;
+            }
+            if (!st || st.textContent !== "threw") return;
+            if (txt.indexOf("attempt-ceiling") === -1) return;
+            handled = true;
+            var rec = spendBudget();
+            if (!rec || rec.n > MAX) return;
+            st.textContent = "Layout do heap falhou -- recarregando para tentar novamente (" + rec.n + "/2)...";
+            st.className = "warn";
+            setTimeout(function () { location.reload(); }, 2000);
+        } catch (e) { /* nunca interromper a página do exploit */ }
+    }, 3000);
+})();
+</script>
 </body>
 </html>
