@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="pt-BR">
 <head>
-    <link rel="icon" type="image/jpeg" href="Gps4_2.jpg">
+    <link rel="icon" type="image/png" href="Gps4.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>EduGps4 // HOSTS PS4 · Eduxds2</title>
@@ -55,7 +55,7 @@
             gap: 14px;
         }
 
-        /* CORREÇÃO DA LOGO: Borda visível e brilho neon para destacar fundo preto */
+        /* LOGO FIXA Gps4.png COM BORDA NEON */
         .gps4-logo {
             width: 44px;
             height: 44px;
@@ -111,6 +111,7 @@
 
         .layout { display: flex; flex: 1 0 auto; flex-direction: column; padding: 22px 0 0; }
 
+        /* Cabeçalho de Conteúdo */
         .kicker { color: var(--accent-pink); font-size: 14px; font-weight: 700; letter-spacing: .14em; margin: 0 0 12px; }
         h2 { font-size: clamp(32px, 5vw, 52px); font-weight: 800; letter-spacing: -.03em; line-height: 1; margin: 0; color: #fff; }
         h2 em { color: var(--accent); font-style: normal; }
@@ -119,6 +120,7 @@
         .boot li { margin: 4px 0; }
         .boot b { color: var(--success); font-weight: 700; }
 
+        /* Menu */
         .menu {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -163,6 +165,7 @@
         .go { color: var(--text-muted); font-size: 12px; font-weight: 800; margin-left: auto; opacity: 0; padding-left: 12px; white-space: nowrap; transition: opacity 0.2s; }
         .row:hover .go, .row:focus .go { opacity: 1; color: var(--accent); }
 
+        /* NodePlay */
         .nodeplay {
             align-items: center;
             background: var(--card-bg);
@@ -182,6 +185,7 @@
         .np-name b { color: var(--accent-pink); font-weight: 800; }
         .np-open { color: var(--accent); font-size: 14px; font-weight: 700; }
 
+        /* Rodapé */
         .foot {
             border-top: 1px solid var(--border);
             color: var(--text-muted);
@@ -208,10 +212,10 @@
 </head>
 <body>
     <div class="app">
+        <!-- HEADER GLOBAL ESTILO EDUXDS2 -->
         <header>
             <div class="brand-header">
-                <!-- Alterado fallback onerror para tentar carregar .jpg ou .png automaticamente -->
-                <img src="Gps4_2.jpg" onerror="this.onerror=null; this.src='Gps4_2.png';" alt="Logo EduGps4" class="gps4-logo">
+                <img src="Gps4.png" alt="Logo EduGps4" class="gps4-logo">
                 <div>
                     <h1>⚡ EduGps4</h1>
                     <div class="brand-sub">Eduxds2 · PS4 Hosts · Menu Principal</div>
@@ -225,7 +229,7 @@
             <h2>Escolha o <em>firmware</em></h2>
             <p class="sub">Selecione o host correspondente à versão de firmware instalada no seu PlayStation 4.</p>
             <ul class="boot">
-                <li>[ <b>ok</b> ] 7 rotas de host detetadas</li>
+                <li>[ <b>ok</b> ] 7 rotas de host detectadas</li>
                 <li>[ <b>ok</b> ] cache offline pronto</li>
             </ul>
 
@@ -279,7 +283,8 @@
             </a>
 
             <footer class="foot">
-                Autor: <a href="https://t.me/sudoBlackArch">BlackArch</a> // Telegram: <a href="https://t.me/PlayStation_Pulse">PlayStation Pulse</a>
+                <div>Autor: <a href="https://t.me/sudoBlackArch">BlackArch</a> // Telegram: <a href="https://t.me/PlayStation_Pulse">PlayStation Pulse</a></div>
+                <div>Projetos Originais: <a href="https://github.com/itskenethb?tab=repositories">itskenethb</a></div>
             </footer>
         </main>
     </div>
