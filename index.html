@@ -164,26 +164,6 @@
         .go { color: var(--text-muted); font-size: 12px; font-weight: 800; margin-left: auto; opacity: 0; padding-left: 12px; white-space: nowrap; transition: opacity 0.2s; }
         .row:hover .go, .row:focus .go { opacity: 1; color: var(--accent); }
 
-        /* NodePlay */
-        .nodeplay {
-            align-items: center;
-            background: var(--card-bg);
-            border: 1px dashed var(--accent-dim);
-            border-radius: 16px;
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-            min-height: 68px;
-            padding: 14px 20px;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
-        .nodeplay:hover, .nodeplay:focus { background: var(--card-hover); border-color: var(--accent); outline: 0; }
-        .np-label { color: var(--text-muted); display: block; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
-        .np-name { color: var(--accent); display: block; font-size: 22px; font-weight: 800; margin-top: 2px; }
-        .np-name b { color: var(--accent-bright); font-weight: 800; }
-        .np-open { color: var(--accent); font-size: 14px; font-weight: 700; }
-
         /* Rodapé */
         .foot {
             border-top: 1px solid var(--border);
@@ -205,7 +185,6 @@
             .grid { grid-template-columns: 1fr; }
             .row { min-height: 64px; }
             .menu-hint { display: none; }
-            .np-name { font-size: 18px; }
         }
     </style>
 </head>
@@ -274,11 +253,6 @@
                     </a>
                 </nav>
             </section>
-
-            <a class="nodeplay" href="https://nodeplay.net/" target="_blank" rel="noopener">
-                <span><span class="np-label">Servidores de jogos premium</span><span class="np-name">Node<b>Play</b></span></span>
-                <span class="np-open">ABRIR &#8599;</span>
-            </a>
 
             <footer class="foot">
                 <div>Autor: <a href="https://t.me/sudoBlackArch">BlackArch</a> // Telegram: <a href="https://t.me/PlayStation_Pulse">PlayStation Pulse</a></div>
