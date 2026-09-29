@@ -3,221 +3,321 @@
 <head>
     <link rel="icon" type="image/png" href="pspulse.png">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>PSPULSE // PS4 HOSTS</title>
     <style>
         :root {
-            --bg: #151515;
-            --panel: #1c1c1c;
-            --panel-2: #242424;
-            --line: #2e2e2e;
-            --line-bright: #454545;
-            --text: #f5f5f5;
-            --muted: #b5b5b5;
-            --dim: #828282;
-            --accent: #a294ff;
-            --accent-dim: #6f63a8;
+            --bg-dark: #090d16;
+            --card-bg: #131c2e;
+            --card-hover: #1c2a45;
+            --accent: #00d2ff;
+            --accent-purple: #9d4edd;
+            --accent-pink: #ff007f;
+            --text-main: #ffffff;
+            --text-muted: #a0aec0;
+            --success: #00e676;
+            --border: #2d3748;
         }
 
-        * { box-sizing: border-box; }
-        html { background: var(--bg); }
-        html, body { margin: 0; min-height: 100%; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+        }
+        html { background: var(--bg-dark); }
+
         body {
-            background-color: var(--bg);
-            background-image: linear-gradient(rgba(162, 148, 255, .05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(162, 148, 255, .05) 1px, transparent 1px);
-            background-size: 36px 36px;
-            color: var(--text);
-            font: 17px/1.4 Consolas, "Liberation Mono", monospace;
-        }
-        a { color: inherit; }
-
-        .app { display: flex; flex-direction: column; margin: 0 auto; max-width: 1220px; min-height: 100vh; padding: 14px 26px 12px; }
-
-        /* Top status bar */
-        .bar {
-            align-items: center;
-            border: 1px solid var(--line-bright);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
             display: flex;
-            font-size: 14px;
+            flex-direction: column;
+        }
+        a { color: inherit; text-decoration: none; }
+
+        /* HEADER */
+        header {
+            background: #0b111e;
+            border-bottom: 1px solid var(--border);
+            padding: 16px 30px;
+            display: flex;
+            align-items: center;
             justify-content: space-between;
-            letter-spacing: .1em;
-            padding: 10px 16px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .brand-header { display: flex; align-items: center; }
+        .gengar-logo {
+            width: 44px;
+            height: 44px;
+            margin-right: 12px;
+            filter: drop-shadow(0 0 10px rgba(157, 78, 221, 0.7));
+            flex-shrink: 0;
+        }
+        header h1 {
+            font-size: 1.2rem;
+            color: var(--accent);
+            background: linear-gradient(45deg, var(--accent), var(--accent-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
             text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 800;
         }
-        .bar b { color: var(--accent); font-weight: 400; }
-        .bar-ready { color: var(--dim); }
-        .bar-ready::before { color: var(--accent); content: "\25CF "; }
+        .brand-sub { font-size: 0.75rem; color: var(--accent); font-weight: 700; }
+        .status {
+            border: 1px solid var(--border);
+            background: var(--card-bg);
+            border-radius: 20px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 6px 14px;
+        }
+        .status::before { color: var(--success); content: "\25CF "; }
 
-        .layout { display: flex; flex: 1 0 auto; flex-direction: column; padding: 22px 0 0; }
+        /* DASHBOARD */
+        .dashboard-view {
+            flex: 1 0 auto;
+            padding: 40px;
+            max-width: 1300px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .header-box { margin-bottom: 8px; }
+        .header-box h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 6px; }
+        .header-box p { color: var(--text-muted); font-size: 1rem; }
 
-        /* Header */
-        .kicker { color: var(--accent); font-size: 14px; letter-spacing: .14em; margin: 0 0 12px; }
-        h1 { font-size: clamp(38px, 5.4vw, 62px); font-weight: 400; letter-spacing: -.07em; line-height: 1; margin: 0; }
-        h1 em { color: var(--accent); font-style: normal; }
-        .sub { color: var(--muted); font-size: 18px; margin: 14px 0 0; max-width: 720px; }
-        .boot { color: var(--dim); font-size: 14px; list-style: none; margin: 14px 0 0; padding: 0; }
-        .boot li { margin: 3px 0; }
-        .boot b { color: var(--accent); font-weight: 400; }
+        .chips { margin: 16px 0 6px; }
+        .chip {
+            display: inline-block;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin: 0 8px 8px 0;
+            padding: 6px 14px;
+        }
+        .chip b { color: var(--success); font-weight: 700; }
 
-        /* Menu */
-        .menu { border: 1px solid var(--line); margin-top: 22px; padding: 14px; }
-        .menu-top {
-            align-items: baseline;
-            border-bottom: 1px solid var(--line);
+        .section-title {
+            border-bottom: 2px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-top: 22px;
+            padding-bottom: 12px;
+        }
+        .section-title span { color: var(--dim, #718096); font-weight: 400; float: right; }
+
+        /* CARDS */
+        .ava-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-gap: 24px;
+            gap: 24px;
+            margin-top: 24px;
+        }
+        .ava-card {
+            background: linear-gradient(145deg, var(--card-bg), #0f172a);
+            border-radius: 14px;
+            padding: 24px;
+            min-height: 150px;
             display: flex;
+            flex-direction: column;
             justify-content: space-between;
-            margin-bottom: 11px;
-            padding: 0 4px 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
         }
-        .menu-title { color: var(--text); font-size: 15px; letter-spacing: .12em; text-transform: uppercase; }
-        .menu-hint { color: var(--dim); font-size: 13px; }
-        .grid { display: grid; gap: 8px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .ava-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent), var(--accent-purple));
+        }
+        .ava-card:hover, .ava-card:focus {
+            background: var(--card-hover);
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 25px rgba(0, 210, 255, 0.25);
+            outline: 0;
+        }
+        .ava-card:focus { box-shadow: 0 0 0 2px var(--bg-dark), 0 0 0 4px var(--accent), 0 10px 25px rgba(0, 210, 255, 0.25); }
+        .ava-card-code { font-size: 0.85rem; color: var(--accent); font-weight: 700; letter-spacing: 0.5px; }
+        .ava-card-title { font-size: 1.4rem; font-weight: 800; color: var(--text-main); margin: 10px 0; line-height: 1.35; }
+        .ava-card-teacher { font-size: 0.85rem; color: var(--accent-pink); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
 
-        .row {
-            align-items: center;
-            background: var(--panel);
-            border: 1px solid var(--line);
+        /* NODEPLAY */
+        .nodeplay {
             display: flex;
-            min-height: 74px;
-            padding: 12px 14px;
-            text-decoration: none;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card-bg);
+            border: 1px dashed var(--accent-purple);
+            border-radius: 16px;
+            margin-top: 24px;
+            padding: 20px 24px;
+            transition: all 0.3s ease;
         }
-        .row:hover, .row:focus {
-            background: var(--panel-2);
+        .nodeplay:hover, .nodeplay:focus {
+            background: var(--card-hover);
             border-color: var(--accent);
             outline: 0;
         }
-        .row:focus { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent); }
-        .num { color: var(--dim); font-size: 14px; min-width: 42px; }
-        .row:hover .num, .row:focus .num { color: var(--accent); }
-        .name { color: var(--text); display: block; font-size: 20px; line-height: 1.2; }
-        .meta { color: var(--muted); display: block; font-size: 13px; margin-top: 4px; }
-        .go { color: var(--dim); font-size: 13px; margin-left: auto; opacity: 0; padding-left: 12px; white-space: nowrap; }
-        .row:hover .go, .row:focus .go { opacity: 1; color: var(--accent); }
+        .nodeplay:focus { box-shadow: 0 0 0 2px var(--bg-dark), 0 0 0 4px var(--accent); }
+        .np-label { color: var(--text-muted); display: block; font-size: 0.8rem; font-weight: 700; }
+        .np-name { color: var(--accent); display: block; font-size: 1.5rem; font-weight: 800; margin-top: 2px; }
+        .np-name b { color: var(--accent-pink); font-weight: 800; }
+        .np-open { color: var(--accent); font-size: 0.9rem; font-weight: 700; }
 
-        /* NodePlay */
-        .nodeplay {
-            align-items: center;
-            background: var(--panel);
-            border: 1px solid var(--line-bright);
-            display: flex;
-            justify-content: space-between;
-            margin-top: 12px;
-            min-height: 68px;
-            padding: 10px 18px;
-            text-decoration: none;
-        }
-        .nodeplay:hover, .nodeplay:focus { background: var(--panel-2); border-color: var(--accent); outline: 0; }
-        .nodeplay:focus { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent); }
-        .np-label { color: var(--dim); display: block; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
-        .np-name { color: var(--text); display: block; font-size: 24px; margin-top: 2px; }
-        .np-name b { color: var(--accent); font-weight: 400; }
-        .np-open { color: var(--accent); font-size: 14px; }
-
-        /* Footer */
+        /* FOOTER */
         .foot {
-            border-top: 1px solid var(--line);
-            color: var(--dim);
-            font-size: 13px;
-            margin-top: 16px;
-            padding: 12px 4px 2px;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 28px;
+            padding: 16px 4px 4px;
             text-align: center;
         }
-        .foot a { color: var(--muted); }
-        .foot a:hover, .foot a:focus { color: var(--accent); }
+        .foot a { color: var(--accent); font-weight: 700; }
+        .foot a:hover, .foot a:focus { color: var(--accent-pink); }
 
         @media (max-width: 760px) {
-            body { font-size: 16px; }
-            .app { padding: 8px 10px; }
-            .bar { font-size: 12px; padding: 8px 12px; }
-            .layout { padding-top: 16px; }
-            h1 { font-size: 40px; }
-            .sub { font-size: 16px; }
-            .grid { grid-template-columns: 1fr; }
-            .row { min-height: 64px; }
-            .menu-hint { display: none; }
-            .np-name { font-size: 20px; }
+            header { padding: 12px 14px; }
+            .dashboard-view { padding: 20px 14px; }
+            .header-box h2 { font-size: 1.4rem; }
+            .ava-grid { grid-template-columns: 1fr; }
+            .section-title span { display: none; }
         }
     </style>
 </head>
 <body>
-    <div class="app">
-        <header class="bar">
-            <span><b>PSPULSE</b> // ps4 hosts</span>
-            <span class="bar-ready">ready</span>
-        </header>
 
-        <main class="layout">
-            <p class="kicker">$ ./launch --select-host</p>
-            <h1>Choose <em>firmware</em></h1>
-            <p class="sub">Pick the host matching the firmware installed on your PlayStation 4.</p>
-            <ul class="boot">
-                <li>[ <b>ok</b> ] 7 host routes detected</li>
-                <li>[ <b>ok</b> ] offline cache ready</li>
-            </ul>
+    <header>
+        <div class="brand-header">
+            <svg class="gengar-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <radialGradient id="ghostBody" cx="38%" cy="32%" r="75%">
+                        <stop offset="0%" stop-color="#b06fe0"/>
+                        <stop offset="55%" stop-color="#8b3fd1"/>
+                        <stop offset="100%" stop-color="#5a189a"/>
+                    </radialGradient>
+                    <linearGradient id="ghostSpike" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#7b2cbf"/>
+                        <stop offset="100%" stop-color="#4c1580"/>
+                    </linearGradient>
+                </defs>
+                <path d="M22 30 L14 12 L30 22 Z" fill="url(#ghostSpike)"/>
+                <path d="M78 30 L86 12 L70 22 Z" fill="url(#ghostSpike)"/>
+                <path d="M50 12 C 72 12, 86 28, 86 50 C 86 62, 82 68, 86 74 C 82 76, 78 73, 75 76 C 71 79, 71 74, 66 78 C 62 81, 62 76, 57 80 C 53 83, 47 83, 43 80 C 38 76, 38 81, 34 78 C 29 74, 29 79, 25 76 C 22 73, 18 76, 14 74 C 18 68, 14 62, 14 50 C 14 28, 28 12, 50 12 Z" fill="url(#ghostBody)" stroke="#3c096c" stroke-width="1.5"/>
+                <path d="M27 42 Q 37 34, 46 44 Q 38 50, 27 42 Z" fill="#fefefe"/>
+                <circle cx="38" cy="43" r="3.4" fill="#0d0221"/>
+                <path d="M73 42 Q 63 34, 54 44 Q 62 50, 73 42 Z" fill="#fefefe"/>
+                <circle cx="62" cy="43" r="3.4" fill="#0d0221"/>
+                <path d="M30 58 Q 50 76, 70 58 Q 66 68, 50 70 Q 34 68, 30 58 Z" fill="#1a0b2e"/>
+                <path d="M33 59 Q 50 71, 67 59" stroke="#ff2fb0" stroke-width="1.5" fill="none" opacity="0.7"/>
+            </svg>
+            <div>
+                <h1>&#9889; PSPULSE</h1>
+                <div class="brand-sub">PS4 Hosts &middot; GoldHEN</div>
+            </div>
+        </div>
+        <span class="status">ready</span>
+    </header>
 
-            <section class="menu" aria-label="Firmware host menu">
-                <div class="menu-top">
-                    <span class="menu-title">Available routes</span>
-                    <span class="menu-hint">&uarr; &darr; move &nbsp; X select</span>
-                </div>
-                <nav class="grid">
-                    <a class="row" href="1352/index.html">
-                        <span class="num">01</span>
-                        <span><span class="name">FW 13.02–13.52</span><span class="meta">SlopKit GoldHEN // offline host</span></span>
-                        <span class="go">[ SELECT ]</span>
-                    </a>
-                    <a class="row" href="1300/version-selector.html">
-                        <span class="num">02</span>
-                        <span><span class="name">FW 11.00–13.00</span><span class="meta">SlopKit WebKit // offline host</span></span>
-                        <span class="go">[ SELECT ]</span>
-                    </a>
-                    <a class="row" href="css/version-selector.html">
-                        <span class="num">03</span>
-                        <span><span class="name">FW 6.00–11.02</span><span class="meta">CSSFontFace // GoldHEN host</span></span>
-                        <span class="go">[ SELECT ]</span>
-                    </a>
-                    <a class="row" href="900/version-selector.html">
-                        <span class="num">04</span>
-                        <span><span class="name">FW 9.00–9.60</span><span class="meta">PSFree / Lapse // GoldHEN host</span></span>
-                        <span class="go">[ SELECT ]</span>
-                    </a>
-                    <a class="row" href="700/version-selector.html">
-                        <span class="num">05</span>
-                        <span><span class="name">FW 7.00–8.52</span><span class="meta">PSFree / Lapse // GoldHEN host</span></span>
-                        <span class="go">[ SELECT ]</span>
-                    </a>
-                    <a class="row" href="672/index.html">
-                        <span class="num">06</span>
-                        <span><span class="name">FW 6.72</span><span class="meta">Dedicated host // utility payloads</span></span>
-                        <span class="go">[ SELECT ]</span>
-                    </a>
-                    <a class="row" href="505/index.html">
-                        <span class="num">07</span>
-                        <span><span class="name">FW 5.05</span><span class="meta">Dedicated host // utility payloads</span></span>
-                        <span class="go">[ SELECT ]</span>
-                    </a>
-                </nav>
-            </section>
+    <main class="dashboard-view">
+        <div class="header-box">
+            <h2>Choose firmware</h2>
+            <p>Pick the host matching the firmware installed on your PlayStation 4.</p>
+        </div>
 
-            <a class="nodeplay" href="https://nodeplay.net/" target="_blank" rel="noopener">
-                <span><span class="np-label">Premium game servers</span><span class="np-name">Node<b>Play</b></span></span>
-                <span class="np-open">OPEN &#8599;</span>
-            </a>
+        <div class="chips">
+            <span class="chip"><b>ok</b> 7 host routes detected</span>
+            <span class="chip"><b>ok</b> offline cache ready</span>
+        </div>
 
-            <footer class="foot">
-                Author: <a href="https://t.me/sudoBlackArch">BlackArch</a> // Telegram: <a href="https://t.me/PlayStation_Pulse">PlayStation Pulse</a>
-            </footer>
-        </main>
-    </div>
+        <div class="section-title">Available routes <span>&uarr; &darr; move &nbsp; X select</span></div>
+
+        <nav class="ava-grid" aria-label="Firmware host menu">
+                    <a class="ava-card" href="1352/index.html">
+                        <div>
+                            <div class="ava-card-code">HOST 01</div>
+                            <div class="ava-card-title">FW 13.02–13.52</div>
+                        </div>
+                        <div class="ava-card-teacher">SlopKit GoldHEN // offline host</div>
+                    </a>
+                    <a class="ava-card" href="1300/version-selector.html">
+                        <div>
+                            <div class="ava-card-code">HOST 02</div>
+                            <div class="ava-card-title">FW 11.00–13.00</div>
+                        </div>
+                        <div class="ava-card-teacher">SlopKit WebKit // offline host</div>
+                    </a>
+                    <a class="ava-card" href="css/version-selector.html">
+                        <div>
+                            <div class="ava-card-code">HOST 03</div>
+                            <div class="ava-card-title">FW 6.00–11.02</div>
+                        </div>
+                        <div class="ava-card-teacher">CSSFontFace // GoldHEN host</div>
+                    </a>
+                    <a class="ava-card" href="900/version-selector.html">
+                        <div>
+                            <div class="ava-card-code">HOST 04</div>
+                            <div class="ava-card-title">FW 9.00–9.60</div>
+                        </div>
+                        <div class="ava-card-teacher">PSFree / Lapse // GoldHEN host</div>
+                    </a>
+                    <a class="ava-card" href="700/version-selector.html">
+                        <div>
+                            <div class="ava-card-code">HOST 05</div>
+                            <div class="ava-card-title">FW 7.00–8.52</div>
+                        </div>
+                        <div class="ava-card-teacher">PSFree / Lapse // GoldHEN host</div>
+                    </a>
+                    <a class="ava-card" href="672/index.html">
+                        <div>
+                            <div class="ava-card-code">HOST 06</div>
+                            <div class="ava-card-title">FW 6.72</div>
+                        </div>
+                        <div class="ava-card-teacher">Dedicated host // utility payloads</div>
+                    </a>
+                    <a class="ava-card" href="505/index.html">
+                        <div>
+                            <div class="ava-card-code">HOST 07</div>
+                            <div class="ava-card-title">FW 5.05</div>
+                        </div>
+                        <div class="ava-card-teacher">Dedicated host // utility payloads</div>
+                    </a>
+        </nav>
+
+        <a class="nodeplay" href="https://nodeplay.net/" target="_blank" rel="noopener">
+            <span><span class="np-label">Premium game servers</span><span class="np-name">Node<b>Play</b></span></span>
+            <span class="np-open">OPEN &#8599;</span>
+        </a>
+
+        <footer class="foot">
+            Author: <a href="https://t.me/sudoBlackArch">BlackArch</a> // Telegram: <a href="https://t.me/PlayStation_Pulse">PlayStation Pulse</a>
+        </footer>
+    </main>
 
     <script>
         (function () {
             // Do not intercept arrow keys: the PS4 browser moves its visible
             // focus pointer natively (spatial navigation). This only places
             // the initial focus so the cursor is visible right after load.
-            var first = document.querySelector('.row');
+            var first = document.querySelector('.ava-card');
             if (first) first.focus();
         })();
     </script>
