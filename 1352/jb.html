@@ -1,103 +1,220 @@
 <!DOCTYPE html>
-<html lang="en" manifest="cache.manifest">
+<html lang="pt-BR" manifest="cache.manifest">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PSPULSE // 13.02-13.52 GOLDHEN</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>EeduGps4 // 13.02-13.52 GOLDHEN · Eduxds2</title>
 <link rel="icon" type="image/png" href="../../pspulse.png">
 <style>
     :root {
-        --bg: #151515;
-        --panel: #1c1c1c;
-        --panel-2: #242424;
-        --line: #2e2e2e;
-        --line-bright: #454545;
-        --text: #f5f5f5;
-        --muted: #b5b5b5;
-        --dim: #828282;
-        --accent: #a294ff;
-        --red: #ff9b9b;
-        --amber: #e1bd72;
+        --bg-dark: #090d16;
+        --card-bg: #131c2e;
+        --card-hover: #1c2a45;
+        --accent: #00d2ff;
+        --accent-purple: #9d4edd;
+        --accent-pink: #ff007f;
+        --text-main: #ffffff;
+        --text-muted: #a0aec0;
+        --success: #00e676;
+        --danger: #ff1744;
+        --warning: #facc15;
+        --border: #2d3748;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { background: var(--bg); }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+    html { background: var(--bg-dark); }
     html, body { min-height: 100%; }
+    
     body {
-        background-color: var(--bg);
-        background-image: linear-gradient(rgba(162, 148, 255, .05) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(162, 148, 255, .05) 1px, transparent 1px);
-        background-size: 36px 36px;
-        color: var(--text);
-        font: 16px/1.45 Consolas, "Liberation Mono", monospace;
+        background-color: var(--bg-dark);
+        background-image: 
+            radial-gradient(circle at 15% 20%, rgba(157, 78, 221, 0.12) 0%, transparent 45%),
+            radial-gradient(circle at 85% 80%, rgba(0, 210, 255, 0.1) 0%, transparent 45%);
+        color: var(--text-main);
         min-height: 100vh;
-        overflow: hidden;
-    }
-
-    .app { margin: 0 auto; padding: 14px 26px 12px; width: min(100% - 52px, 1220px); }
-
-    /* Top status bar */
-    .bar {
-        align-items: center;
-        border: 1px solid var(--line-bright);
         display: flex;
-        font-size: 14px;
-        justify-content: space-between;
-        letter-spacing: .1em;
-        padding: 10px 16px;
-        text-transform: uppercase;
+        flex-direction: column;
     }
-    .bar b { color: var(--accent); font-weight: 400; }
-    .bar-chain { color: var(--dim); }
-    .bar-chain::before { color: var(--accent); content: "\25CF "; }
 
-    #state { color: var(--accent); font-size: 22px; font-weight: 400; line-height: 1.25; margin: 18px 0 10px; }
-    .ok { color: var(--accent); }
-    .bad { color: var(--red); }
-    .warn { color: var(--amber); }
+    /* HEADER GLOBAL SUPERIOR ESTILO EDUXDS2 */
+    header {
+        background: #0b111e;
+        border-bottom: 1px solid var(--border);
+        padding: 16px 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
 
-    /* chain JS scrolls this element - keep overflow and a fixed height */
+    .brand-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .gengar-logo {
+        width: 44px;
+        height: 44px;
+        filter: drop-shadow(0 0 10px rgba(157, 78, 221, 0.7));
+        flex-shrink: 0;
+    }
+
+    header h1 {
+        font-size: 1.25rem;
+        background: linear-gradient(45deg, var(--accent), var(--accent-pink));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 800;
+    }
+
+    .brand-sub {
+        font-size: 0.75rem;
+        color: var(--accent);
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+
+    .badge-chain {
+        background: rgba(0, 210, 255, 0.1);
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .badge-chain::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        background-color: var(--accent);
+        border-radius: 50%;
+        box-shadow: 0 0 8px var(--accent);
+    }
+
+    /* CONTAINER PRINCIPAL */
+    .app {
+        margin: 0 auto;
+        padding: 30px 24px;
+        width: min(100% - 48px, 1100px);
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* STATUS DO EXPLOIT */
+    #state {
+        color: var(--accent);
+        font-size: 1.5rem;
+        font-weight: 800;
+        line-height: 1.3;
+        margin-bottom: 16px;
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .ok { color: var(--success) !important; }
+    .bad { color: var(--danger) !important; }
+    .warn { color: var(--warning) !important; }
+
+    /* CONSOLA DE SAÍDA DO EXPLOIT */
     #out {
-        background: var(--panel);
-        border: 1px solid var(--line-bright);
-        color: var(--text);
-        font: inherit;
-        font-size: 13px;
-        line-height: 1.45;
-        height: calc(100vh - 150px);
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        color: var(--text-main);
+        font-family: 'Consolas', 'Liberation Mono', monospace;
+        font-size: 13.5px;
+        line-height: 1.6;
+        height: calc(100vh - 210px);
         overflow-y: auto;
-        padding: 12px 14px;
+        padding: 20px;
         white-space: pre-wrap;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        position: relative;
+    }
+
+    /* BARRA DE ROLAGEM ESTILIZADA */
+    #out::-webkit-scrollbar {
+        width: 8px;
+    }
+    #out::-webkit-scrollbar-track {
+        background: rgba(0,0,0,0.2);
+        border-radius: 8px;
+    }
+    #out::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 8px;
+    }
+    #out::-webkit-scrollbar-thumb:hover {
+        background: var(--accent-purple);
     }
 
     @media (max-width: 760px) {
-        .app { padding: 8px 10px; width: min(100% - 20px, 560px); }
-        .bar { font-size: 12px; padding: 8px 12px; }
-        #state { font-size: 19px; margin: 14px 0 8px; }
-        #out { height: calc(100vh - 120px); font-size: 12px; }
+        header { padding: 12px 16px; }
+        .badge-chain { font-size: 0.7rem; padding: 4px 10px; }
+        .app { padding: 16px 12px; width: 100%; }
+        #state { font-size: 1.2rem; margin-bottom: 12px; }
+        #out { height: calc(100vh - 170px); font-size: 12px; padding: 14px; }
     }
 </style>
 </head>
 <body>
-    <div class="app">
-        <header class="bar">
-            <span><b>PSPULSE</b> // ps4 hosts</span>
-            <span class="bar-chain">slopkit chain</span>
-        </header>
 
+    <!-- HEADER GLOBAL PADRÃO EDUXDS2 -->
+    <header>
+        <div class="brand-header">
+            <svg class="gengar-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <radialGradient id="ghostBody" cx="38%" cy="32%" r="75%">
+                        <stop offset="0%" stop-color="#b06fe0"/>
+                        <stop offset="55%" stop-color="#8b3fd1"/>
+                        <stop offset="100%" stop-color="#5a189a"/>
+                    </radialGradient>
+                    <linearGradient id="ghostSpike" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#7b2cbf"/>
+                        <stop offset="100%" stop-color="#4c1580"/>
+                    </linearGradient>
+                </defs>
+                <path d="M22 30 L14 12 L30 22 Z" fill="url(#ghostSpike)"/>
+                <path d="M78 30 L86 12 L70 22 Z" fill="url(#ghostSpike)"/>
+                <path d="M50 12 C 72 12, 86 28, 86 50 C 86 62, 82 68, 86 74 C 82 76, 78 73, 75 76 C 71 79, 71 74, 66 78 C 62 81, 62 76, 57 80 C 53 83, 47 83, 43 80 C 38 76, 38 81, 34 78 C 29 74, 29 79, 25 76 C 22 73, 18 76, 14 74 C 18 68, 14 62, 14 50 C 14 28, 28 12, 50 12 Z" fill="url(#ghostBody)" stroke="#3c096c" stroke-width="1.5"/>
+                <path d="M27 42 Q 37 34, 46 44 Q 38 50, 27 42 Z" fill="#fefefe"/>
+                <circle cx="38" cy="43" r="3.4" fill="#0d0221"/>
+                <path d="M73 42 Q 63 34, 54 44 Q 62 50, 73 42 Z" fill="#fefefe"/>
+                <circle cx="62" cy="43" r="3.4" fill="#0d0221"/>
+                <path d="M30 58 Q 50 76, 70 58 Q 66 68, 50 70 Q 34 68, 30 58 Z" fill="#1a0b2e"/>
+                <path d="M33 59 Q 50 71, 67 59" stroke="#ff2fb0" stroke-width="1.5" fill="none" opacity="0.7"/>
+            </svg>
+            <div>
+                <h1>⚡ PSPULSE · GoldHEN</h1>
+                <div class="brand-sub">Eduxds2 · PS4 Host · FW 13.02-13.52</div>
+            </div>
+        </div>
+
+        <div class="badge-chain">slopkit chain</div>
+    </header>
+
+    <div class="app">
         <div id="state">loading jailbreak...</div>
         <div id="out"></div>
     </div>
+
 <script type="module">import "./jb.js";</script>
 <script>
 // PSPULSE: bounded auto-reload when the primitive gives up.
-// Repeated placement misses mean this page-load heap layout does not suit
-// the groom, and only a fresh load reshuffles it. The chain reports ceiling
-// exhaustion as "attempt-ceiling" in the visible log; on sight, reload up
-// to 2 times, then stop and leave the failure visible for manual retry.
-// The budget write must verifiably persist, otherwise a broken
-// sessionStorage would loop forever -- fail closed instead.
-// Upstream jb.js / core.js logic is NOT otherwise modified.
 (function () {
     var KEY = "pspulse-1352-reloads";
     var MAX = 2;
