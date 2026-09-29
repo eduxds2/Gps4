@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>EduGps4 // 13.02-13.52 GOLDHEN</title>
+<title>EduGps4 </title>
 <link rel="icon" type="image/png" href="./Gps4.png">
 <style>
     :root {
@@ -178,6 +178,7 @@
     var MAX = 2;
     var WINDOW_MS = 10 * 60 * 1000;
     var handled = false;
+
     function readBudget() {
         var rec = null;
         try { rec = JSON.parse(sessionStorage.getItem(KEY) || "null"); } catch (e) { rec = null; }
@@ -185,6 +186,7 @@
         if (!rec || typeof rec.n !== "number" || (now - rec.t) > WINDOW_MS) return { n: 0, t: now };
         return rec;
     }
+
     function spendBudget() {
         var rec = readBudget();
         rec.n++;
@@ -196,6 +198,7 @@
         } catch (e) {}
         return null;
     }
+
     function successSeen(txt) {
         var lines = txt.split("\n");
         for (var i = lines.length - 1; i >= 0; i--) {
@@ -205,16 +208,24 @@
         }
         return false;
     }
+
+    // Monitora as alterações no elemento #state sem duplicar elementos na página
+    var observer = new MutationObserver(function() {
+        var st = document.getElementById("state");
+        if (st && (st.textContent === "no offsets for this firmware" || st.textContent === "loading jailbreak...")) {
+            st.textContent = "Iniciando desbloqueio...";
+        }
+    });
+
+    var targetNode = document.getElementById("state");
+    if (targetNode) {
+        observer.observe(targetNode, { childList: true, characterData: true, subtree: true });
+    }
+
     setInterval(function () {
         try {
-            var st = document.getElementById("state");
-            
-            // Força a substituição da frase no elemento #state para "Iniciando desbloqueio..."
-            if (st && (st.textContent === "no offsets for this firmware" || st.textContent === "loading jailbreak...")) {
-                st.textContent = "Iniciando desbloqueio...";
-            }
-
             if (handled) return;
+            var st = document.getElementById("state");
             var out = document.getElementById("out");
             var txt = out ? out.textContent : "";
 
@@ -232,7 +243,7 @@
             st.className = "warn";
             setTimeout(function () { location.reload(); }, 2000);
         } catch (e) { }
-    }, 100);
+    }, 1000);
 })();
 </script>
 </body>
