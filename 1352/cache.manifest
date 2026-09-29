@@ -1,11 +1,10 @@
 CACHE MANIFEST
-# v4 - EduGps4 Green Neon Theme Update & Offline Logo Fix
+# EduGps4 - Host Cache Offline v1.0
 
 CACHE:
 index.html
-jb.html
 cache.html
-../Gps4.png
+jb.html
 jb.js
 core.js
 mem.js
@@ -13,6 +12,7 @@ int64.js
 rpc_worker.js
 ps4_offsets.js
 goldhen.bin
+Gps4.png
 patches/1302.bin
 patches/1350.bin
 patches/1352.bin
