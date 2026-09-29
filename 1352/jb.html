@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>EduGps4 // 13.02-13.52 GOLDHEN · Eduxds2</title>
-<link rel="icon" type="image/png" href="../../pspulse.png">
+<link rel="icon" type="image/png" href="Gps4.png">
 <style>
     :root {
         --bg-dark: #090d16;
@@ -54,10 +54,11 @@
         gap: 14px;
     }
 
-    .gengar-logo {
+    .gps4-logo {
         width: 44px;
         height: 44px;
-        filter: drop-shadow(0 0 10px rgba(157, 78, 221, 0.7));
+        object-fit: contain;
+        filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.7));
         flex-shrink: 0;
     }
 
@@ -129,7 +130,7 @@
     .bad { color: var(--danger) !important; }
     .warn { color: var(--warning) !important; }
 
-    /* CONSOLA DE SAÍDA DO EXPLOIT */
+    /* CONSOLE DE SAÍDA DO EXPLOIT */
     #out {
         background: var(--card-bg);
         border: 1px solid var(--border);
@@ -176,47 +177,26 @@
     <!-- HEADER GLOBAL PADRÃO EDUXDS2 -->
     <header>
         <div class="brand-header">
-            <svg class="gengar-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <radialGradient id="ghostBody" cx="38%" cy="32%" r="75%">
-                        <stop offset="0%" stop-color="#b06fe0"/>
-                        <stop offset="55%" stop-color="#8b3fd1"/>
-                        <stop offset="100%" stop-color="#5a189a"/>
-                    </radialGradient>
-                    <linearGradient id="ghostSpike" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#7b2cbf"/>
-                        <stop offset="100%" stop-color="#4c1580"/>
-                    </linearGradient>
-                </defs>
-                <path d="M22 30 L14 12 L30 22 Z" fill="url(#ghostSpike)"/>
-                <path d="M78 30 L86 12 L70 22 Z" fill="url(#ghostSpike)"/>
-                <path d="M50 12 C 72 12, 86 28, 86 50 C 86 62, 82 68, 86 74 C 82 76, 78 73, 75 76 C 71 79, 71 74, 66 78 C 62 81, 62 76, 57 80 C 53 83, 47 83, 43 80 C 38 76, 38 81, 34 78 C 29 74, 29 79, 25 76 C 22 73, 18 76, 14 74 C 18 68, 14 62, 14 50 C 14 28, 28 12, 50 12 Z" fill="url(#ghostBody)" stroke="#3c096c" stroke-width="1.5"/>
-                <path d="M27 42 Q 37 34, 46 44 Q 38 50, 27 42 Z" fill="#fefefe"/>
-                <circle cx="38" cy="43" r="3.4" fill="#0d0221"/>
-                <path d="M73 42 Q 63 34, 54 44 Q 62 50, 73 42 Z" fill="#fefefe"/>
-                <circle cx="62" cy="43" r="3.4" fill="#0d0221"/>
-                <path d="M30 58 Q 50 76, 70 58 Q 66 68, 50 70 Q 34 68, 30 58 Z" fill="#1a0b2e"/>
-                <path d="M33 59 Q 50 71, 67 59" stroke="#ff2fb0" stroke-width="1.5" fill="none" opacity="0.7"/>
-            </svg>
+            <img src="Gps4.png" alt="Logo EduGps4" class="gps4-logo">
             <div>
                 <h1>⚡ EduGps4 · GoldHEN</h1>
-                <div class="brand-sub">Eduxds2 · PS4 Host · FW 13.02-13.52</div>
+                <div class="brand-sub">Eduxds2 · Host PS4 · FW 13.02-13.52</div>
             </div>
         </div>
 
-        <div class="badge-chain">slopkit chain</div>
+        <div class="badge-chain">cadeia slopkit</div>
     </header>
 
     <div class="app">
-        <div id="state">loading jailbreak...</div>
+        <div id="state">Carregando desbloqueio...</div>
         <div id="out"></div>
     </div>
 
 <script type="module">import "./jb.js";</script>
 <script>
-// PSPULSE: bounded auto-reload when the primitive gives up.
+// Auto-recarregamento controlado quando a primitiva desiste.
 (function () {
-    var KEY = "pspulse-1352-reloads";
+    var KEY = "edugps4-1352-reloads";
     var MAX = 2;
     var WINDOW_MS = 10 * 60 * 1000;
     var handled = false;
@@ -263,10 +243,10 @@
             handled = true;
             var rec = spendBudget();
             if (!rec || rec.n > MAX) return;
-            st.textContent = "heap layout missed -- reloading for a fresh heap (" + rec.n + "/2)...";
+            st.textContent = "Layout do heap falhou -- recarregando para tentar novamente (" + rec.n + "/2)...";
             st.className = "warn";
             setTimeout(function () { location.reload(); }, 2000);
-        } catch (e) { /* never break the exploit page */ }
+        } catch (e) { /* nunca interromper a página do exploit */ }
     }, 3000);
 })();
 </script>
