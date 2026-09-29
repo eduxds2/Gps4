@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" manifest="cache.manifest">
+<html lang="pt-BR" manifest="cache.manifest">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduGps4 // PS4 13.02-13.52 HOST / Eduxds2 </title>
-    <link rel="icon" type="image/png" href="../../pspulse.png">
+    <title>EduGps4 // HOST PS4 13.02-13.52 / Eduxds2</title>
+    <link rel="icon" type="image/png" href="Gps4.png">
     <style>
         :root {
             --bg-dark: #090d16;
@@ -46,11 +46,12 @@
             z-index: 100;
         }
         .brand-header { display: flex; align-items: center; }
-        .gengar-logo {
+        .gps4-logo {
             width: 44px;
             height: 44px;
             margin-right: 12px;
-            filter: drop-shadow(0 0 10px rgba(157, 78, 221, 0.7));
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.7));
             flex-shrink: 0;
         }
         header h1 {
@@ -151,68 +152,48 @@
 <body>
     <header>
         <div class="brand-header">
-            <svg class="gengar-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <radialGradient id="ghostBody" cx="38%" cy="32%" r="75%">
-                        <stop offset="0%" stop-color="#b06fe0"/>
-                        <stop offset="55%" stop-color="#8b3fd1"/>
-                        <stop offset="100%" stop-color="#5a189a"/>
-                    </radialGradient>
-                    <linearGradient id="ghostSpike" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#7b2cbf"/>
-                        <stop offset="100%" stop-color="#4c1580"/>
-                    </linearGradient>
-                </defs>
-                <path d="M22 30 L14 12 L30 22 Z" fill="url(#ghostSpike)"/>
-                <path d="M78 30 L86 12 L70 22 Z" fill="url(#ghostSpike)"/>
-                <path d="M50 12 C 72 12, 86 28, 86 50 C 86 62, 82 68, 86 74 C 82 76, 78 73, 75 76 C 71 79, 71 74, 66 78 C 62 81, 62 76, 57 80 C 53 83, 47 83, 43 80 C 38 76, 38 81, 34 78 C 29 74, 29 79, 25 76 C 22 73, 18 76, 14 74 C 18 68, 14 62, 14 50 C 14 28, 28 12, 50 12 Z" fill="url(#ghostBody)" stroke="#3c096c" stroke-width="1.5"/>
-                <path d="M27 42 Q 37 34, 46 44 Q 38 50, 27 42 Z" fill="#fefefe"/>
-                <circle cx="38" cy="43" r="3.4" fill="#0d0221"/>
-                <path d="M73 42 Q 63 34, 54 44 Q 62 50, 73 42 Z" fill="#fefefe"/>
-                <circle cx="62" cy="43" r="3.4" fill="#0d0221"/>
-                <path d="M30 58 Q 50 76, 70 58 Q 66 68, 50 70 Q 34 68, 30 58 Z" fill="#1a0b2e"/>
-                <path d="M33 59 Q 50 71, 67 59" stroke="#ff2fb0" stroke-width="1.5" fill="none" opacity="0.7"/>
-            </svg>
+            <img src="Gps4.png" alt="Logo EduGps4" class="gps4-logo">
             <div>
-                <h1>&#9889; EduGps4</h1>
-                <div class="brand-sub">PS4 Hosts &middot; GoldHEN</div>
+                <h1>⚡ EduGps4</h1>
+                <div class="brand-sub">Hosts PS4 &middot; GoldHEN</div>
             </div>
         </div>
-        <span class="pill">cache update</span>
+        <span class="pill">atualização de cache</span>
     </header>
 
     <div class="app">
         <main class="layout">
             <div class="header-box">
-                <h2>Loading <span>offline cache</span></h2>
+                <h2>Carregando <span>cache offline</span></h2>
             </div>
 
             <div class="chips">
-                <span class="chip"><b>ok</b> slopkit chain ready</span>
-                <span class="chip"><b>..</b> downloading host files</span>
+                <span class="chip"><b>ok</b> cadeia slopkit pronta</span>
+                <span class="chip"><b>..</b> baixando arquivos do host</span>
             </div>
 
             <section class="progress-container">
-                <div class="progress-label" id="progress">Loading.. Please Wait !!!</div>
+                <div class="progress-label" id="progress">Carregando... Por favor, aguarde!</div>
                 <div class="progress-wrapper">
                     <div class="progress-bar" id="myProgress">
                         <div class="progress-fill" id="myBar"></div>
                         <div class="progress-text" id="progressText">0%</div>
                     </div>
                 </div>
-                <div class="status-message">Initializing cache system...</div>
+                <div class="status-message" id="statusMsg">Inicializando sistema de cache...</div>
             </section>
         </main>
 
         <footer class="foot">
-            Author:<a href=".">.</a> // Telegram: <a href=".">PlayStation 4</a>
+            Autor: <a href=".">.</a> // Telegram: <a href=".">PlayStation 4</a>
         </footer>
     </div>
 
     <script>
-if (window.applicationCache.status == 2) { localStorage.is1352Cached = true; }
+        if (window.applicationCache.status == 2) { localStorage.is1352Cached = true; }
         window.applicationCache.ondownloading = function () {
-            document.getElementById("progress").innerHTML = "Page Caching Started!!";
+            document.getElementById("progress").innerHTML = "Salvamento de Página Iniciado!";
+            document.getElementById("statusMsg").innerHTML = "Baixando arquivos para uso offline...";
             localStorage.is1352Cached = false;
         };
         window.applicationCache.onprogress = function (a) {
@@ -221,12 +202,14 @@ if (window.applicationCache.status == 2) { localStorage.is1352Cached = true; }
             document.getElementById("progressText").innerHTML = progress + "%";
         };
         window.applicationCache.oncached = function () {
-            document.getElementById("progress").innerHTML = "Page Cached Successfully!!!";
+            document.getElementById("progress").innerHTML = "Página Salva com Sucesso!";
+            document.getElementById("statusMsg").innerHTML = "O host foi armazenado na memória. Redirecionando...";
             localStorage.is1352Cached = true;
             setTimeout(function () { window.location.replace("index.html"); }, 1500);
         };
         window.applicationCache.onupdateready = function () {
-            document.getElementById("progress").innerHTML = "Update Cache Successfully!!!";
+            document.getElementById("progress").innerHTML = "Cache Atualizado com Sucesso!";
+            document.getElementById("statusMsg").innerHTML = "Os novos arquivos foram salvos. Redirecionando...";
             localStorage.is1352Cached = true;
             setTimeout(function () { window.location.replace("index.html"); }, 1500);
         };
