@@ -10,16 +10,19 @@ def calculate_file_hash(file_path):
     return sha256_hash.hexdigest()
 
 def generate_cache_manifest(directory_path, include_directory_path=True, include_payloads=True):
-    manifest = ["CACHE MANIFEST"]
+    manifest = ["CACHE MANIFEST", "# EduGps4 - Cache Manifest Auto-Generated"]
     
     for root, _, files in os.walk(directory_path):
         for file in files:
-            if '.appcache' in file:
+            # Ignora manifestos antigos, geradores e imagens brutas não utilizadas
+            if file.endswith('.appcache') or file == 'cache.manifest' or 'appcache_manifest_generator' in file or file.endswith('.jpg'):
                 continue
+                
             file_path = os.path.join(root, file)
 
             if not include_payloads and 'payload' in root:
                 continue
+            
             file_hash = calculate_file_hash(file_path)
             
             if args.cloudflare_workaround and file == 'index.html':
@@ -37,52 +40,23 @@ def generate_cache_manifest(directory_path, include_directory_path=True, include
             manifest_path = manifest_path.replace("\\","/")
             manifest.append(manifest_path + " #" + file_hash)
 
+    manifest.append("\nNETWORK:\n*")
     return manifest
 
-parser = argparse.ArgumentParser(description="Generate an appcache file.")
+parser = argparse.ArgumentParser(description="Gera o arquivo cache.manifest para o EduGps4.")
 parser.add_argument("directory_path", nargs='?', default='./',
-                    help="The directory to generate the appcache for (default: './').")
-parser.add_argument("-a", "--root-appcache",action="store_true",
-                    help="Generate appcache if your index.html is at root")
-parser.add_argument("-b", "--sub-appcache", action="store_true",
-                    help="Generate appcache if your index.html is at document/en/ps5/index.html")
-parser.add_argument("-ab", "--both-appcache", action="store_true",
-                    help="Generate both appcache files. (Default)")
-# parser.add_argument("-p", "--include-payloads", action="store_true",
-#                     help="Include files with 'payload' in its path. (Payload caching is handled in js)")
+                    help="Diretório base para gerar o cache (Padrão: './').")
 parser.add_argument("-cf", "--cloudflare-workaround", action="store_true",
-                    help="Cloudflare responds with 308 redirect to root when fetching index.html. Causing the appcache to error out.")
+                    help="Ajuste para Cloudflare (Redirecionamento 308 do index.html).")
 args = parser.parse_args()
 
-if args.root_appcache or args.sub_appcache:
-    args.both_appcache = False
-else:
-    args.root_appcache = True
-    args.sub_appcache = True
-   
+# Gera o manifesto na raiz da pasta selecionada
+cache_manifest = generate_cache_manifest(args.directory_path, False)
 
-if args.sub_appcache:
-    # cache_manifest = generate_cache_manifest(args.directory_path, True, args.include_payloads)
-    cache_manifest = generate_cache_manifest(args.directory_path, True)
+output_path = os.path.join(args.directory_path, "cache.manifest")
+output_path = output_path.replace("\\", "/")
 
-    output_path = "cache.appcache"
-    output_path = output_path.replace("\\","/")
+with open(output_path, "w", encoding="utf-8") as manifest_file:
+    manifest_file.write("\n".join(cache_manifest))
 
-    with open(output_path, "w") as manifest_file:
-        manifest_file.write("\n".join(cache_manifest))
-
-    print(f"Cache manifest generated in path: '{output_path}'")
-
-
-if args.root_appcache:
-    # cache_manifest = generate_cache_manifest(args.directory_path, False, args.include_payloads)
-    cache_manifest = generate_cache_manifest(args.directory_path, False)
-
-    output_path = "cache.appcache"
-    output_path = os.path.join(args.directory_path, output_path)
-    output_path = output_path.replace("\\","/")
-
-    with open(output_path, "w") as manifest_file:
-        manifest_file.write("\n".join(cache_manifest))
-
-    print(f"Cache manifest generated in path: '{output_path}'")
+print(f"[OK] Cache manifest do EduGps4 gerado com sucesso em: '{output_path}'")
