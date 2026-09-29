@@ -5,7 +5,7 @@
     <link rel="icon" type="image/png" href="Gps4.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>EduGps4 // PS4 6.00-11.02 HOST / 2.4B18.12 · Eduxds2</title>
+    <title>EduGps4 // HOST PS4 6.00-11.02 / 2.4B18.12 · Eduxds2</title>
     <style>
         :root {
             --bg-dark: #090d16;
@@ -298,38 +298,38 @@
     <!-- HEADER GLOBAL PADRÃO EDUXDS2 -->
     <header>
         <div class="brand-header">
-            <img src="Gps4.png" alt="EduGps4 Logo" class="gps4-logo">
+            <img src="Gps4.png" alt="Logo EduGps4" class="gps4-logo">
             <div>
                 <h1>⚡ EduGps4 · GoldHEN</h1>
-                <div class="brand-sub">Eduxds2 · PS4 Host · FW 6.00-11.02</div>
+                <div class="brand-sub">Eduxds2 · Host PS4 · FW 6.00-11.02</div>
             </div>
         </div>
 
-        <div class="bar-fw">fw 6.00-11.02 ready</div>
+        <div class="bar-fw">FW 6.00-11.02 Pronto</div>
     </header>
 
     <div class="app">
         <main class="layout">
-            <p class="kicker">$ ./launch --cssfontface</p>
-            <h2>CSSFontFace <em>6.00-11.02</em> host</h2>
-            <p class="sub">Offline auto GoldHEN loader by EduGps4.</p>
+            <p class="kicker">$ ./executar --cssfontface</p>
+            <h2>Host CSSFontFace <em>6.00-11.02</em></h2>
+            <p class="sub">Carregador automático offline do GoldHEN por EduGps4.</p>
             <ul class="boot">
-                <li>[ <b>ok</b> ] cssfontface chain ready</li>
-                <li>[ <b>ok</b> ] goldhen v2.4b18.12 staged</li>
-                <li>[ <b>ok</b> ] offline cache ready</li>
+                <li>[ <b>ok</b> ] cadeia cssfontface pronta</li>
+                <li>[ <b>ok</b> ] goldhen v2.4b18.12 preparado</li>
+                <li>[ <b>ok</b> ] cache offline pronto</li>
             </ul>
-            <p id="UA">Running on:</p>
-            <p id="cache">Checking offline cache...</p>
+            <p id="UA">Executando em:</p>
+            <p id="cache">Verificando cache offline...</p>
 
             <div class="status">
-                <div class="status-label">Exploit output</div>
-                <pre id="console">Ready. Awaiting execution...</pre>
+                <div class="status-label">Saída do Exploit</div>
+                <pre id="console">Pronto. Aguardando execução...</pre>
             </div>
 
             <section class="controls">
-                <div class="section-title">Exploit control</div>
+                <div class="section-title">Controle do Exploit</div>
                 <form id="kernel-options">
-                    <span class="chain-label">Kernel chain</span>
+                    <span class="chain-label">Cadeia Kernel</span>
                     <div class="chain-options">
                         <input type="radio" name="kernel" id="netctrl-exploit" value="netctrl">
                         <label class="chain-option" for="netctrl-exploit">Poops</label>
@@ -337,7 +337,7 @@
                         <label class="chain-option" for="lapse-exploit">Lapse</label>
                     </div>
                     <button id="jeilbrek" type="button">Jailbreak</button>
-                    <button id="reloadBtn" type="button">Reload</button>
+                    <button id="reloadBtn" type="button">Recarregar</button>
                     <div class="auto-jb">
                         <label class="auto-jb-label" for="autoJbInput" id="autoJbLabel">Auto Jailbreak</label>
                         <input id="autoJbInput" type="checkbox">
@@ -346,13 +346,13 @@
             </section>
 
             <a class="nodeplay" href="https://nodeplay.net/" target="_blank" rel="noopener">
-                <span><span class="np-label">Premium game servers</span><span class="np-name">Node<b>Play</b></span></span>
-                <span class="np-open">OPEN &#8599;</span>
+                <span><span class="np-label">Servidores de jogos premium</span><span class="np-name">Node<b>Play</b></span></span>
+                <span class="np-open">ABRIR &#8599;</span>
             </a>
 
             <footer class="foot">
-                <div>Author: <a href="https://t.me/sudoBlackArch">BlackArch</a> // Telegram: <a href="https://t.me/PlayStation_Pulse">PlayStation Pulse</a></div>
-                <div>Upstream: <a href="https://github.com/itskenethb?tab=repositories">itskenethb</a></div>
+                <div>Autor: <a href="https://t.me/sudoBlackArch">BlackArch</a> // Telegram: <a href="https://t.me/PlayStation_Pulse">PlayStation Pulse</a></div>
+                <div>Projetos Originais: <a href="https://github.com/itskenethb?tab=repositories">itskenethb</a></div>
             </footer>
         </main>
     </div>
@@ -372,27 +372,27 @@
         var ac = window.applicationCache;
 
         if (!ac || !document.documentElement.hasAttribute("manifest")) {
-            setCache("application cache unavailable");
+            setCache("cache de aplicativo indisponível");
         } else if (!navigator.onLine) {
-            setCache("offline -- using cached resources", true);
+            setCache("offline -- usando recursos armazenados em cache", true);
         } else if (ac.status === ac.IDLE) {
-            setCache("cached -- offline ready", true);
+            setCache("em cache -- pronto para uso offline", true);
         } else if (ac.status === ac.UPDATEREADY) {
             try {
                 ac.swapCache();
             } catch (e) {}
-            setCache("update downloaded -- offline ready", true);
+            setCache("atualização baixada -- pronto para uso offline", true);
         } else {
-            setCache("checking cache...");
+            setCache("verificando cache...");
 
             ac.addEventListener("downloading", function () {
-                setCache("caching for offline (first run)...");
+                setCache("salvando em cache para uso offline (primeira execução)...");
             }, false);
 
             ac.addEventListener("progress", function (e) {
                 if (e && e.total) {
                     setCache(
-                        "caching " +
+                        "salvando em cache " +
                         Math.round((e.loaded / e.total) * 100) +
                         "%"
                     );
@@ -400,26 +400,26 @@
             }, false);
 
             ac.addEventListener("cached", function () {
-                setCache("cached for offline use", true);
+                setCache("armazenado em cache para uso offline", true);
             }, false);
 
             ac.addEventListener("updateready", function () {
                 try {
                     ac.swapCache();
                 } catch (e) {}
-                setCache("update downloaded -- offline ready", true);
+                setCache("atualização baixada -- pronto para uso offline", true);
             }, false);
 
             ac.addEventListener("noupdate", function () {
-                setCache("cached -- offline ready", true);
+                setCache("em cache -- pronto para uso offline", true);
             }, false);
 
             ac.addEventListener("error", function () {
-                setCache("cache unavailable");
+                setCache("cache indisponível");
             }, false);
 
             ac.addEventListener("obsolete", function () {
-                setCache("cache obsolete");
+                setCache("cache obsoleto");
             }, false);
         }
     })();
