@@ -69,11 +69,15 @@
             gap: 14px;
         }
 
+        /* Estilização da Logo Fixo Gps4.png */
         .gps4-logo {
             width: 44px;
             height: 44px;
-            object-fit: contain;
-            filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.7));
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 12px rgba(0, 210, 255, 0.8);
+            background-color: #000;
             flex-shrink: 0;
         }
 
@@ -81,6 +85,7 @@
             font-size: 1.25rem;
             background: linear-gradient(45deg, var(--accent), var(--accent-pink));
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -120,7 +125,7 @@
 
         .layout { display: flex; flex: 1 0 auto; flex-direction: column; padding: 20px 0 0; }
 
-        /* Titles & Subtitles */
+        /* Títulos e Subtítulos */
         .kicker { color: var(--accent-pink); font-size: 14px; font-weight: 700; letter-spacing: .14em; margin: 0 0 10px; }
         .layout h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 800; letter-spacing: -.03em; line-height: 1.1; margin: 0; color: #fff; }
         .layout h2 em { color: var(--accent); font-style: normal; }
@@ -133,7 +138,7 @@
         #cache { color: var(--text-muted); font-size: 13px; margin: 8px 0 0; min-height: 16px; font-weight: 600; }
         #cache.cacheok { color: var(--success); }
 
-        /* Status / Exploit output */
+        /* Status / Saída do Exploit */
         .status {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -167,7 +172,7 @@
             white-space: pre-wrap;
         }
 
-        /* Controls */
+        /* Controles */
         .controls {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -266,7 +271,7 @@
         .np-name b { color: var(--accent-pink); font-weight: 800; }
         .np-open { color: var(--accent); font-size: 14px; font-weight: 700; }
 
-        /* Footer */
+        /* Rodapé */
         .foot {
             border-top: 1px solid var(--border);
             color: var(--text-muted);
