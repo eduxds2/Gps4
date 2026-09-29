@@ -14,7 +14,7 @@ def generate_cache_manifest(directory_path, include_directory_path=True, include
     
     for root, _, files in os.walk(directory_path):
         for file in files:
-            if '.appcache' in file:
+            if '.manifest' in file or '.appcache' in file:
                 continue
             file_path = os.path.join(root, file)
 
@@ -39,19 +39,17 @@ def generate_cache_manifest(directory_path, include_directory_path=True, include
 
     return manifest
 
-parser = argparse.ArgumentParser(description="Generate an appcache file.")
+parser = argparse.ArgumentParser(description="Gerador de arquivo cache.manifest para EduGps4 / Eduxds2.")
 parser.add_argument("directory_path", nargs='?', default='./',
-                    help="The directory to generate the appcache for (default: './').")
-parser.add_argument("-a", "--root-appcache",action="store_true",
-                    help="Generate appcache if your index.html is at root")
+                    help="O diretório para gerar o cache (padrão: './').")
+parser.add_argument("-a", "--root-appcache", action="store_true",
+                    help="Gera o manifesto se o index.html estiver na raiz.")
 parser.add_argument("-b", "--sub-appcache", action="store_true",
-                    help="Generate appcache if your index.html is at document/en/ps5/index.html")
+                    help="Gera o manifesto se o index.html estiver em um subdiretório (ex: document/pt/ps4/index.html).")
 parser.add_argument("-ab", "--both-appcache", action="store_true",
-                    help="Generate both appcache files. (Default)")
-# parser.add_argument("-p", "--include-payloads", action="store_true",
-#                     help="Include files with 'payload' in its path. (Payload caching is handled in js)")
+                    help="Gera ambas as estruturas de manifesto. (Padrão)")
 parser.add_argument("-cf", "--cloudflare-workaround", action="store_true",
-                    help="Cloudflare responds with 308 redirect to root when fetching index.html. Causing the appcache to error out.")
+                    help="Contorna o redirecionamento 308 do Cloudflare ao buscar o index.html.")
 args = parser.parse_args()
 
 if args.root_appcache or args.sub_appcache:
@@ -62,27 +60,25 @@ else:
    
 
 if args.sub_appcache:
-    # cache_manifest = generate_cache_manifest(args.directory_path, True, args.include_payloads)
     cache_manifest = generate_cache_manifest(args.directory_path, True)
 
-    output_path = "cache.appcache"
+    output_path = "cache.manifest"
     output_path = output_path.replace("\\","/")
 
     with open(output_path, "w") as manifest_file:
         manifest_file.write("\n".join(cache_manifest))
 
-    print(f"Cache manifest generated in path: '{output_path}'")
+    print(f"Manifesto de cache gerado em: '{output_path}'")
 
 
 if args.root_appcache:
-    # cache_manifest = generate_cache_manifest(args.directory_path, False, args.include_payloads)
     cache_manifest = generate_cache_manifest(args.directory_path, False)
 
-    output_path = "cache.appcache"
+    output_path = "cache.manifest"
     output_path = os.path.join(args.directory_path, output_path)
     output_path = output_path.replace("\\","/")
 
     with open(output_path, "w") as manifest_file:
         manifest_file.write("\n".join(cache_manifest))
 
-    print(f"Cache manifest generated in path: '{output_path}'")
+    print(f"Manifesto de cache gerado em: '{output_path}'")
