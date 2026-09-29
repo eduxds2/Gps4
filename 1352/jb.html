@@ -161,10 +161,10 @@
                     <div class="brand-sub">Eduxds2 · FW 13.02-13.52</div>
                 </div>
             </div>
-            <span class="bar-chain">EXPLOIT CHAIN</span>
+            <span class="bar-chain">CADEIA DO EXPLOIT</span>
         </header>
 
-        <div id="state">Iniciando jailbreak...</div>
+        <div id="state">Iniciando desbloqueio...</div>
         <div id="out"></div>
     </div>
 
@@ -218,7 +218,7 @@
             handled = true;
             var rec = spendBudget();
             if (!rec || rec.n > MAX) return;
-            st.textContent = "Falha na organização do heap -- recarregando para novo heap (" + rec.n + "/2)...";
+            st.textContent = "Falha na organização da memória -- recarregando para nova tentativa (" + rec.n + "/2)...";
             st.className = "warn";
             setTimeout(function () { location.reload(); }, 2000);
         } catch (e) { }
